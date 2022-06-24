@@ -80,7 +80,7 @@ const NewRaffleModal = ({showModal, setShowModal}) => {
                     </div>
                     <p className="text-2sm font-bold text-center">UPLOAD NEW RAFFLE</p>
                     <p className="text-1sm text-center">Add the details below</p>
-                    <input value={name} onChange={e => setName(e.target.value)} placeholder="Project Name" className="bg-black border-white h-16 rounded-md w-full border-2 flex text-1sm mt-5 px-2"/>
+                    <input value={name} onChange={e => setName(e.target.value)} placeholder="Project Name" className="bg-black border-white h-16 rounded-md w-full border-2 flex text-1sm mt-5 px-2" required/>
                     <div className="flex items-center justify-center w-full mt-4">
                         <label
                             className="flex flex-col w-full h-20 border-4 border-blue-200 border-dashed rounded-md">
@@ -99,29 +99,29 @@ const NewRaffleModal = ({showModal, setShowModal}) => {
                     <div className="flex flex-col sm:flex-row justify-between items-center mt-5">
                         <div className="flex flex-row justify-center items-center border-2 bg-black text-white px-2 py-2 text-1sm w-full sm:w-inputW rounded-md h-16">
                             <div className="text-black rounded-full p-2 bg-white"><FaTwitter/></div>
-                            <input value={twitterLink} onChange={e => setTwitterLink(e.target.value)} className="bg-black w-full outline-0 border-0 ml-2"/>
+                            <input value={twitterLink} onChange={e => setTwitterLink(e.target.value)} className="bg-black w-full outline-0 border-0 ml-2" required/>
                         </div>
                         <div className="flex flex-row justify-center items-center border-2 bg-black text-white px-2 py-2 text-1sm w-full sm:w-inputW rounded-md h-16 mt-5 sm:mt-0">
                             <div className="text-black rounded-full p-2 bg-white"><FaDiscord/></div>
-                            <input value={discordLink} onChange={e => setDiscordLink(e.target.value)} className="bg-black w-full outline-0 border-0 ml-2"/>
+                            <input value={discordLink} onChange={e => setDiscordLink(e.target.value)} className="bg-black w-full outline-0 border-0 ml-2" required/>
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row justify-between items-center mt-5">
                         <div className="flex flex-row justify-center items-center border-2 bg-black text-white px-2 py-2 text-1sm w-full sm:w-inputW rounded-md h-16">
-                            <input value={price} onChange={e => setPrice(e.target.value)} className="bg-black w-full outline-0 border-0 ml-1" placeholder="PRICE"/>
+                            <input value={price} onChange={e => setPrice(e.target.value)} className="bg-black w-full outline-0 border-0 ml-1" placeholder="PRICE" required/>
                             $KOZY
                         </div>
-                        <input value={winners} onChange={e => setWinners(e.target.value)} placeholder="NO. of Winners" className="flex flex-row justify-center items-center border-2 bg-black text-white px-2 py-2 text-1sm w-full sm:w-inputW rounded-md h-16 mt-5 sm:mt-0"/>
+                        <input value={winners} onChange={e => setWinners(e.target.value)} placeholder="NO. of Winners" className="flex flex-row justify-center items-center border-2 bg-black text-white px-2 py-2 text-1sm w-full sm:w-inputW rounded-md h-16 mt-5 sm:mt-0" required/>
                     </div>
                     <div className="flex flex-col sm:flex-row justify-between items-center mt-5">
                         <div className="flex flex-row justify-between items-center text-white text-1sm w-full sm:w-inputW">
-                            <input value={day} onChange={e => setDay(e.target.value)} className="bg-black pl-1 h-16 border-2 w-timeW sm:w-imgSPad rounded-md" placeholder="DAYS"/>
+                            <input value={day} onChange={e => setDay(e.target.value)} className="bg-black pl-1 h-16 border-2 w-timeW sm:w-imgSPad rounded-md" placeholder="DAYS" required/>
                             :
-                            <input value={hour} onChange={e => setHour(e.target.value)} className="bg-black pl-1 h-16 border-2 w-timeW sm:w-imgSPad rounded-md" placeholder="Hrs"/>
+                            <input value={hour} onChange={e => setHour(e.target.value)} className="bg-black pl-1 h-16 border-2 w-timeW sm:w-imgSPad rounded-md" placeholder="Hrs" required/>
                             :
-                            <input value={minute} onChange={e => setMinute(e.target.value)} className="bg-black pl-1 h-16 border-2 w-timeW sm:w-imgSPad rounded-md" placeholder="Mins"/>
+                            <input value={minute} onChange={e => setMinute(e.target.value)} className="bg-black pl-1 h-16 border-2 w-timeW sm:w-imgSPad rounded-md" placeholder="Mins" required/>
                         </div>
-                        <input value={collectionSize} onChange={e => setCollectionSize(e.target.value)} placeholder="Collection Size" className="flex flex-row justify-center items-center border-2 bg-black text-white px-2 py-2 text-1sm w-full sm:w-inputW rounded-md h-16 mt-5 sm:mt-0"/>
+                        <input value={collectionSize} onChange={e => setCollectionSize(e.target.value)} placeholder="Collection Size" className="flex flex-row justify-center items-center border-2 bg-black text-white px-2 py-2 text-1sm w-full sm:w-inputW rounded-md h-16 mt-5 sm:mt-0" required/>
                     </div>
                     <div className="text-center">
                         <button className="mt-10 hover:text-white rounded-full bg-green px-12 py-2 text-0sm text-white font-medium font-Poppins border-4 border-green hover:bg-black" type="submit" >Upload</button>
