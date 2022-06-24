@@ -13,6 +13,7 @@ module.exports = {
       '2sm' : '40px',
       '3sm' : '50px',
       '4sm' : '55px',
+      '5sm' : '30px',
     },
     extend: {
       colors:{

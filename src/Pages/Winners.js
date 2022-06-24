@@ -3,7 +3,9 @@ import Header from "../Layout/Header";
 import Win from '../assets/win.svg'
 import NFT1 from '../assets/1.png';
 import { FaDiscord,FaTwitter } from "react-icons/fa"
-import Table, { StatusPill } from "../Components/Table";
+import Blur1 from '../assets/Blur1.svg';
+import TableComponent, { StatusPill } from "../Components/Table";
+import './Winners.css'
 const Winners = () => {
     const data = React.useMemo(
         () => [
@@ -76,18 +78,21 @@ const Winners = () => {
                     <img src={Win} alt="win"/>
                 </div>
             </p>
-            <div className="flex flex-col md:flex-row items-center justify-evenly">
+            <div className="flex flex-col md:flex-row items-center justify-evenly sm:mt-10">
                 <div className="flex flex-col items-center justify-center">
                     <img src={NFT1} alt="NFT1" className="rounded-full w-NFTW" />
-                    <p className="text-white font-bold text-2sm">KOZY KOALA #278</p>
+                    <p className="text-white font-bold text-5sm sm:text-2sm mt-3 sm:mt-0">KOZY KOALA #278</p>
                     <div className="flex flex-row justify-center mt-2 sm:mt-0">
-                        <a className="text-black text-2sm my-auto rounded-full bg-white p-3" href="#twitter"><FaTwitter/></a>
-                        <a className="text-black text-2sm my-auto rounded-full bg-white p-3 ml-5" href="#discord"><FaDiscord/></a>
+                        <a className="text-black text-5sm sm:text-2sm my-auto rounded-full bg-white p-3" href="#twitter"><FaTwitter/></a>
+                        <a className="text-black text-5sm sm:text-2sm my-auto rounded-full bg-white p-3 ml-5" href="#discord"><FaDiscord/></a>
                     </div>
                 </div>
-                <div>
-                    <Table columns={columns} data={data}/>
+                <div className="winner_list p-5 border-2 border-white rounded-3xl">
+                    <TableComponent columns={columns} data={data}/>
                 </div>
+            </div>
+            <div className="py-20 flex justify-center items-center">
+                <img src={Blur1} alt="blur1"/>
             </div>
         </>
     )
