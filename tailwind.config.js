@@ -18,6 +18,7 @@ module.exports = {
     extend: {
       colors:{
         'green' : '#15D4A4',
+        'bitblue': '#08BCF0',
         'red' : '#E90F0F'
       },
       spacing: {

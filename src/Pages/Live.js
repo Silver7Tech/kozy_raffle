@@ -20,7 +20,7 @@ const Live = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row text-white font-bold text-1sm mt-5">
                     <div className="text-center">NO. OF TICKETS SOLD :&nbsp; <span className="text-green">500/2500</span></div>
-                    <div className="text-center"><span className="hidden sm:inline">&nbsp;|</span> NO. OF WINNERS :&nbsp; <span className="text-green">25</span></div>
+                    <div className="text-center"><span className="hidden sm:inline">&nbsp;|</span> NO. OF WINNERS :&nbsp; <span className="text-bitblue">25</span></div>
                 </div>
                 <Footer activeTab={"live"}/>
             </div>

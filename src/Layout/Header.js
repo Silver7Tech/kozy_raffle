@@ -31,7 +31,7 @@ const Header = () => {
                     <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/winners" activeclassname="active">Winners</NavLink>
                     {/* <a className="text-white hover:text-yellow text-1sm font-oxygen w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " href="#faq">FAQ</a> */}
                 </div>
-                <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-Poppins hidden sm:flex">Connect Wallet</button>
+                <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-Poppins hidden sm:flex border-4 border-green hover:bg-black">Connect Wallet</button>
             </div>
         </nav>
     )
