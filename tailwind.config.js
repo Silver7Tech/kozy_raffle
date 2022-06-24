@@ -29,6 +29,9 @@ module.exports = {
         'imgPad': '55px',
         'imgSPad': '60px',
         'NFTW' : '300px',
+        'ModalW': '650px',
+        'inputW': '250px',
+        'timeW': '80px',
       }
     },
   },

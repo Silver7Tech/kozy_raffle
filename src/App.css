@@ -68,6 +68,7 @@ body {
   transition-delay: 1s;
   border-bottom: 1px solid #fff;
 }
+
 .footer::before {
   background-color: #fff;
   content: "";
@@ -79,6 +80,7 @@ body {
   width: 100vw;
   z-index: 0;
 }
+
 @media(max-width:850px) {
   .footer::before {
    display: none;
@@ -88,4 +90,25 @@ body {
 .nav-link a.active {
   font-weight: bold;
   text-decoration: underline;
+}
+
+.close{
+  cursor: pointer;
+	position: absolute;
+	top: 25px;
+	right: 25px;
+}
+
+.close div {
+	height: 3px;
+	width: 24px;
+	background-color: rgb(177, 177, 177);
+	margin: 4px 0;
+	transition: all 0.3s ease;
+}
+.line1 {
+	transform: rotate(-45deg) translate(-5px, 6px);
+}
+.line2 {
+	transform: rotate(45deg) translate(1px, 0px);
 }

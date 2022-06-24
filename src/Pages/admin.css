@@ -1,0 +1,31 @@
+.admin table {
+    overflow: auto;
+    overflow-x: hidden;
+    height: 70vh;
+}
+.admin thead tr {
+    border-bottom: 1px solid #fff;
+} 
+.admin thead tr th {
+    min-width: 205px;
+    padding-right: 0;
+}
+.admin tbody tr td {
+    min-width: 205px;
+    padding-right: 0;
+}
+@media (max-width:750px) {
+    .admin {
+        margin-top: 40px;
+        height: 500px;
+    }
+    .admin table {
+        overflow-x: auto;
+    }
+    .admin thead tr th {
+        min-width: 190px;
+    }
+    .admin tbody tr td {
+        min-width: 190px;
+    }
+}

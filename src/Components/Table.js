@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTable,useSortBy } from 'react-table';
 import { SortDownIcon, SortUpIcon, SortIcon } from "./shared/Icon";
+import { FaDiscord,FaTwitter,FaRegEdit,FaEye } from "react-icons/fa"
 
 export function StatusPill({ value }) {
     return (
@@ -11,6 +12,33 @@ export function StatusPill({ value }) {
       </span>
     );
   }
+export function LinkFill({ value }) {
+    return (
+    <div className="flex flex-row">
+        <a className="text-black text-0sm rounded-full bg-white p-3" href={value}><FaTwitter/></a>
+        <a className="text-black text-0sm rounded-full bg-white p-3 ml-2" href={value}><FaDiscord/></a>
+    </div>
+    );
+}
+
+export function EditFill({ value }) {
+    return (
+        <a><FaRegEdit /></a>
+    );
+}
+
+export function ViewFill({ value }) {
+    return (
+        <a><FaEye /></a>
+    );
+}
+
+export function ImgFill({ value }) {
+    return (
+        <img src={value} alt='img' className="rounded-full w-16"/>
+    );
+}
+
 const TableComponent = ({columns, data}) => {
  const {
    getTableProps,
@@ -28,7 +56,7 @@ const TableComponent = ({columns, data}) => {
                {headerGroup.headers.map(column => (
                    <th
                        {...column.getHeaderProps(column.getSortByToggleProps())}
-                       className="group pr-12 py-3 text-left text-0sm font-medium text-white uppercase tracking-wider"
+                       className="group pr-12 py-3 text-left text-0sm font-bold text-white uppercase tracking-wider"
                    >
                      <div className="flex items-center justify-between">
                         {column.render("Header")}

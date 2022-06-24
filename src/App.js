@@ -4,6 +4,7 @@ import Live from './Pages/Live';
 import Closed from './Pages/Closed';
 import Winners from './Pages/Winners';
 import Purchase from './Pages/Purchase';
+import Admin from './Pages/Admin';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/closed" exact element={<Closed/>} />
         <Route path="/winners" exact element={<Winners/>} />
         <Route path="/purchase" exact element={<Purchase/>} />
+        <Route path="/admin" exact element={<Admin/>} />
       </Routes>
     </div>
   );
