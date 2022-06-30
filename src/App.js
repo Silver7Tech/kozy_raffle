@@ -12,6 +12,7 @@ import { Program, AnchorProvider, web3 } from '@project-serum/anchor';
 import idl from './idl.json';
 // SystemProgram is a reference to the Solana runtime!
 const { SystemProgram, Keypair } = web3;
+const rentSysvar = web3.SYSVAR_RENT_PUBKEY;
 
 // Get our program's id from the IDL file.
 const programID = new PublicKey(idl.metadata.address);
@@ -23,10 +24,15 @@ const network = clusterApiUrl('devnet');
 const opts = {
   preflightCommitment: "processed"
 }
+window.Buffer = window.Buffer || require('buffer').Buffer;
 
 function App() {
   const [walletAddress, setWalletAddress] = useState(null);
   const [vaultAccount, setVaultAccount] = useState(null);
+  const [vaultBump, setVaultBump] = useState(null);
+  const [entrantAccount, setEntrantAccount] = useState(null);
+  const [entrantBump, setEntrantBump] = useState(null);
+
   // const []
   const checkIfWalletIsConnected = async () => {
     try {
@@ -45,7 +51,7 @@ function App() {
         alert('Solana object not found! Get a Phantom Wallet 👻');
       }
     } catch (error) {
-      console.error(error);
+      console.log("error", error);
     }
   };
 
@@ -72,18 +78,53 @@ function App() {
 
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
-      console.log(provider,program.programId)
 
-      const [_pda, _nonce] = await PublicKey.findProgramAddress(
-        [
-          Buffer.from("vault"),
-          program.ProgramId.toBuffer(),
-        ],
-        program.ProgramId
-      );
-      console.log(_pda, _nonce)
+      const [_pda, _nonce] = 
+        await PublicKey.findProgramAddress(
+          [
+            Buffer.from("vault"),
+            programID.toBuffer(),
+          ],
+          programID
+        );
+      setVaultAccount(_pda);
+      setVaultBump(_nonce);
+
+      await program.rpc.initializeVault(
+        _nonce,
+        {
+          accounts : {
+            owner: new PublicKey(walletAddress),
+            vaultAccount: _pda,
+            systemProgram: SystemProgram.programId,
+            rent: rentSysvar, 
+          },
+        }
+      )
+
     } catch (error) {
-      
+      console.log("error", error);
+    }
+  }
+
+  const initializeEntrant = async() => {
+    try {
+
+      const provider = getProvider();
+      const program = new Program(idl, programID, provider);
+
+      const [_pda, _nonce] = 
+        await PublicKey.findProgramAddress(
+          [
+            Buffer.from("entrant"),
+            programID.toBuffer(),
+          ],
+          programID
+        );
+        setEntrantAccount(_pda);
+        setEntrantBump(_nonce);
+    } catch (error) {
+      console.log("error", error);
     }
   }
 
@@ -98,7 +139,8 @@ function App() {
 
   useEffect(() => {
     if(walletAddress!=null){
-      initializeVault()
+      initializeVault();
+      initializeEntrant();
     }
   },[walletAddress])
   
