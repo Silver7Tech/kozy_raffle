@@ -2,12 +2,10 @@ import React from "react";
 import SwiperComponent from "../Components/Swiper/SwiperComponent";
 import { FaDiscord,FaTwitter } from "react-icons/fa"
 import Footer from "../Components/Footer";
-import Header from "../Layout/Header";
 
 const Live = () => {
     return (
         <>
-            <Header/>
             <div className="flex flex-col items-center w-full">
                 <p className="text-white font-bold text-2sm sm:text-3sm">KOZY KLUB <span className="text-green">LIVE</span></p>
                 <SwiperComponent activeTab={"live"}/>

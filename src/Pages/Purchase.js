@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Header from "../Layout/Header";
 import Blur1 from '../assets/Blur1.svg';
 import NFT1 from '../assets/1.png';
 import Timer from "../Components/Timer";
@@ -18,7 +17,6 @@ const Purchase = () => {
     }
     return(
         <>
-            <Header/>
             <div className="flex flex-col md:flex-row items-center justify-evenly sm:mt-10">
                 <div className="flex flex-col items-center justify-center">
                     <img src={NFT1} alt="NFT1" className="rounded-full w-NFTW" />

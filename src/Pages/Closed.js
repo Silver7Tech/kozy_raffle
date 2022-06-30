@@ -1,12 +1,10 @@
 import React from "react";
-import Header from "../Layout/Header";
 import SwiperComponent from "../Components/Swiper/SwiperComponent";
 import { FaDiscord,FaTwitter } from "react-icons/fa"
 import Footer from "../Components/Footer";
 const Closed = () => {
     return(
         <>
-            <Header/> 
             <div className="flex flex-col items-center w-full">
                 <p className="flex flex-col sm:flex-row justify-center items-center text-white font-bold text-2sm sm:text-3sm">KOZY KLUB <span className="text-red">CLOSED</span></p>
                 <SwiperComponent activeTab={"closed"}/>
