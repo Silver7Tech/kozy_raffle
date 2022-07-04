@@ -1,6 +1,5 @@
 .admin table {
     overflow: auto;
-    overflow-x: hidden;
     height: 70vh;
 }
 .admin thead tr {
