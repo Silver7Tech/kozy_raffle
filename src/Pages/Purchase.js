@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Blur1 from '../assets/Blur1.svg';
-import NFT1 from '../assets/1.png';
 import Timer from "../Components/Timer";
 import { FaDiscord,FaTwitter } from "react-icons/fa"
 import { useLocation } from "react-router-dom";
@@ -13,9 +12,9 @@ const Purchase = () => {
     
     useEffect(()=> {
         if(location.state.vaultAccountData!=null){
-            setCurrentRaffle(location.state.vaultAccountData.raffles[location.state.currentRaffleIndex]);
+            setCurrentRaffle(location.state.vaultAccountData[location.state.currentRaffleIndex]);
         }
-    },[location.state.vaultAccountData])
+    },[location.state.vaultAccountData, location.state.currentRaffleIndex])
 
     const increaseAmount = () => {
         setAmount(amount+1)

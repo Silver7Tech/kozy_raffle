@@ -1,6 +1,5 @@
 import React, {useState,useEffect} from "react";
 import Win from '../assets/win.svg'
-import NFT1 from '../assets/1.png';
 import { FaDiscord,FaTwitter } from "react-icons/fa"
 import Blur1 from '../assets/Blur1.svg';
 import TableComponent, { StatusPill } from "../Components/Table";
@@ -20,11 +19,11 @@ const Winners = () => {
 
   useEffect(()=> {
       if(location.state.vaultAccountData!=null){
-        const closedRaffleWinner = location.state.vaultAccountData.raffles[location.state.currentRaffleIndex].winner;
+        const closedRaffleWinner = location.state.vaultAccountData[location.state.currentRaffleIndex].winner;
         const winnerWallet = new PublicKey(closedRaffleWinner.publicKey);
         setWinnerAddress(closedRaffleWinner.publicKey);
         setTicketNumber(closedRaffleWinner.ticket);
-        setCurrentRaffle(location.state.vaultAccountData.raffles[location.state.currentRaffleIndex]);
+        setCurrentRaffle(location.state.vaultAccountData[location.state.currentRaffleIndex]);
         
       }
   },[location.state.vaultAccountData])
