@@ -37,10 +37,10 @@ const Timer = ({countTime}) => {
                         </div>
                     </div>
 
-                    <div className="text-4sm font-bold mt-4">&nbsp;:&nbsp;</div>
-                    <div className="flex flex-col items-center">
+                    <div className="text-4sm font-bold mt-4 hidden sm:flex">&nbsp;:&nbsp;</div>
+                    <div className="flex flex-col items-center hidden sm:flex">
                         <div className="text-0sm font-bold mb-countB mt-countT">
-                            Seconds
+                            SECONDS
                         </div>
                         <div className="text-2sm sm:text-4sm font-bold">
                         {seconds}

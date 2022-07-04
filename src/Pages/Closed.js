@@ -24,7 +24,7 @@ const Closed = ({vaultAccountData}) => {
         return(
             <>
                 <div className="flex flex-col items-center w-full">
-                    <p className="flex flex-col sm:flex-row justify-center items-center text-white font-bold text-2sm sm:text-3sm">KOZY KLUB <span className="text-red">CLOSED</span></p>
+                    <p className="flex flex-col sm:flex-row justify-center items-center text-white font-bold text-2sm sm:text-3sm">KOZY KLUB&nbsp;<span className="text-red">CLOSED</span></p>
                     <SwiperComponent vaultAccountData={vaultAccountData} currentRaffleIndex={currentRaffleIndex} setCurrentRaffleIndex={setCurrentRaffleIndex} activeTab={"closed"} flag={flag}/>
                     <div className="flex flex-col sm:flex-row text-white font-bold text-1sm sm:text-2sm mt-5">
                         {vaultAccountData.raffles[currentRaffleIndex].name}
