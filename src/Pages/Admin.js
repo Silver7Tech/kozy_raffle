@@ -78,7 +78,7 @@ const Admin = ({vaultAccountData}) => {
               <TableComponent columns={columns} data={data}/>
           </div>
       </>
-  )
+    )
   }
 
   
