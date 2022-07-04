@@ -10,81 +10,50 @@ import "./myswiper.css";
 import SlideNextButton from "./SlideNextButton";
 import SlidePrevButton from "./SlidePrevButton";
 
-const SwiperComponent = ({vaultAccountData,currentRaffleIndex,setCurrentRaffleIndex,activeTab,flag}) => {
+const SwiperComponent = ({vaultAccountData,currentRaffleIndex,setCurrentRaffleIndex,activeTab}) => {
     const [NFTList, setNFTList] = useState([]);
-    const [liveIndexs, setLiveIndexs] = useState([]);
-
-    const setPrevIndex = () => {
-        if(liveIndexs.length==1){
-            setCurrentRaffleIndex(liveIndexs[0]-1)
-        } else {
-            let temp_index = 0;
-            liveIndexs.map((item,index) => {
-                if(item-1 == currentRaffleIndex){
-                    if(index == 0){
-                        temp_index = liveIndexs[0]-1
-                    } else {
-                        temp_index = liveIndexs[index-1]-1
-                    }
-                }
-            })
-            setCurrentRaffleIndex(temp_index)
-        }
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const onTouchEnd = (e) => {
+        setCurrentRaffleIndex(e.realIndex);
     }
-
-    const setNextIndex = () => {
-        if(liveIndexs.length==1){
-            setCurrentRaffleIndex(liveIndexs[0]-1)
-        } else {
-            let temp_index = 0;
-            liveIndexs.map((item,index) => {
-                if(item-1 == currentRaffleIndex){
-                    if(index+1 < liveIndexs.length){
-                        temp_index = liveIndexs[index+1]-1
-                    } else {
-                        temp_index = liveIndexs[index]-1
-                    }
-                }
-            })
-            setCurrentRaffleIndex(temp_index)
-        }
-    }
-
     useEffect(()=> {
         if(vaultAccountData!=null){
-            let images = [];
-            let indexs = [];
-            vaultAccountData.raffles.map((item) => {
-                if(flag==1){
+            var nftlist = [];
+            vaultAccountData.map((item, index) => {
+                if(activeTab === "live"){
                     if(Number(item.endTimestamp)>Date.now()/1000){
-                        images.push(item.image)
-                        indexs.push(item.index)
+                        nftlist.push(item.image)
                     }
                 } else {
                     if(Number(item.endTimestamp)<Date.now()/1000){
-                        images.push(item.image)
-                        indexs.push(item.index)
+                        nftlist.push(item.image)
                     }
                 }
+                if(index === currentIndex){
+                    setCurrentRaffleIndex(index);
+                }
             })
-
-            setNFTList(images);
-            setLiveIndexs(indexs);
-            if(indexs.length!=0){
-                setCurrentRaffleIndex(indexs[0]-1);
-            } else {
-                setCurrentRaffleIndex(null);
-            }
+            setNFTList(nftlist);
         }
-    },[vaultAccountData])
+    },[currentIndex, vaultAccountData]);
 
     return (
         <div className="w-full lg:w-11/12 mx-auto">
             <Swiper
                 effect={"coverflow"}
-                grabCursor={true}
+                grabCursor={false}
                 loop={false}
+                onTouchEnd={onTouchEnd}
                 centeredSlides={true}
+                onSlideChange={(swiperCore) => {
+                    const {
+                      activeIndex,
+                      snapIndex,
+                      previousIndex,
+                      realIndex,
+                    } = swiperCore;
+                    setCurrentIndex(activeIndex);
+                }}
                 breakpoints = {{
                     320: {
                         width: 320,
@@ -122,10 +91,10 @@ const SwiperComponent = ({vaultAccountData,currentRaffleIndex,setCurrentRaffleIn
                                     isActive 
                                     ?
                                     <div className="flex flex-row items-center">
-                                        <SlidePrevButton setPrevIndex={setPrevIndex}/>
+                                        <SlidePrevButton />
                                         <img src={item} alt="NFT" className="w-imgSW sm:w-imgW"/>
                                         <img src={activeTab==="live" ? LiveCircle : ClosedCircle} alt="live" className="absolute left-imgSPad sm:left-imgPad" />
-                                        <SlideNextButton setNextIndex={setNextIndex}/>
+                                        <SlideNextButton/>
                                     </div>
                                     :
                                     isPrev || isNext

@@ -28,7 +28,7 @@ const Header = ({connectWallet,walletAddress,setName,setTwitterLink,setDiscordLi
                     <img src={Logo} alt="Logo"/>
                     <div className="sm:hidden block flex flex-row items-center">
                         {
-                            walletAddress != null?
+                            walletAddress !== null?
                                 <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-poppins" >Disconnect</button>
                             :
                                 <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-poppins" onClick={() => connectWallet()}>Connect Wallet</button>
@@ -46,20 +46,23 @@ const Header = ({connectWallet,walletAddress,setName,setTwitterLink,setDiscordLi
                         <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/" activeclassname="active" onClick={navToggle}>Live</NavLink>
                         <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/closed" activeclassname="active" onClick={navToggle}>Closed</NavLink>
                         {
-                            walletAddress=="E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY"?
+                            walletAddress==="E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY"
+                            ?
                             <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/admin" activeclassname="active" onClick={navToggle}>Admin</NavLink>
                             :
                             <></>
                         }
                         {
-                            walletAddress=="E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY"?
+                            walletAddress==="E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY"
+                            ?
                             <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-Poppins border-4 border-green hover:bg-black mb-2 sm:mb-0 w-52" onClick={newRaffle} >Add New Raffle</button>
                             :
                             <></>
                         }
                     </div>
                     {
-                        walletAddress != null?
+                        walletAddress !== null
+                        ?
                             <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-poppins hidden sm:flex border-4 border-green hover:bg-black" >Disconnect</button>
                         :
                             <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-poppins hidden sm:flex border-4 border-green hover:bg-black" onClick={() => connectWallet()}>Connect Wallet</button>
