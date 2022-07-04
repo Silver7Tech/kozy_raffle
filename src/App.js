@@ -203,6 +203,13 @@ function App() {
           },
         }
       )
+      
+
+      const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
+      setVaultAccountData(vaultAccountDatas);
+      const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
+      setEntrantAccountData(entrantAccountDatas);
+
 
     } catch (error) {
       console.log(error)

@@ -46,7 +46,6 @@ const NewRaffleModal = ({showModal, setShowModal,setName,setTwitterLink,setDisco
             try {
                 const formData = new FormData();
                 formData.append("file", fileImg);
-                console.log(process.env.REACT_APP_PINATA_API_KEY)
                 const resFile = await axios({
                     method: "post",
                     url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
@@ -60,7 +59,6 @@ const NewRaffleModal = ({showModal, setShowModal,setName,setTwitterLink,setDisco
 
                 const ImgHash = `https://ipfs.io/ipfs/${resFile.data.IpfsHash}`;
                 setImage(ImgHash)
-                console.log(ImgHash)
             } catch (error) {
                 console.log("Error sending File to IPFS: ")
                 console.log(error)

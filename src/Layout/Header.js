@@ -3,7 +3,7 @@ import Logo from '../assets/logo.svg';
 import { NavLink } from "react-router-dom";
 import NewRaffleModal from "../Components/NewRaffleModal";
 
-const Header = ({connectWallet,setWalletAddress,walletAddress,vaultAccount, entrantAccount, owner,setName,setTwitterLink,setDiscordLink,setPrice,setWinners,setCollectionSize,setDay,setHour,setMinute,setImage}) => {
+const Header = ({connectWallet,walletAddress,setName,setTwitterLink,setDiscordLink,setPrice,setWinners,setCollectionSize,setDay,setHour,setMinute,setImage}) => {
     const menuBtn = createRef();
     const menu = createRef();
     const [showModal, setShowModal] = useState(false);
