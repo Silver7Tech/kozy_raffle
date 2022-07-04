@@ -215,6 +215,25 @@ function App() {
       console.log(error)
     }
   }
+  const buyTicket = async(index,amount) => {
+    try {
+      const provider = getProvider();
+      const program = new Program(idl, programID, provider);
+      await program.rpc.buyTickets(
+        new BN(index),
+        new BN(amount),
+        {
+          accounts: {
+            vaultAccount: vaultAccount,
+            entrantAccount: entrantAccount,
+            owner: provider.wallet.publicKey,
+          },
+        }
+      )
+    } catch (error) {
+      
+    }
+  }
 
 
   useEffect(() => {
@@ -301,11 +320,7 @@ function App() {
     <div className='App'>
       <Header 
         connectWallet={connectWallet}
-        setWalletAddress={setWalletAddress}
         walletAddress={walletAddress}
-        vaultAccount={vaultAccount}
-        entrantAccount={entrantAccount}
-        owner={owner}
         setName={setName}
         setTwitterLink={setTwitterLink}
         setDiscordLink={setDiscordLink}

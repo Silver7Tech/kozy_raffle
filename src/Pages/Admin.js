@@ -9,6 +9,15 @@ const Admin = ({vaultAccountData}) => {
       let temp_data = [];
       vaultAccountData.raffles.map((item) => {
         if(Number(item.endTimestamp) > Date.now()/1000){
+
+          let time = Number(item.endTimestamp) -  Date.now()/1000;
+          const day = (time-time%(3600 * 24))/(3600 * 24);
+          time = time - day * 3600 * 24;
+          const hour = (time -time%3600)/3600;
+          time = time - hour * 3600;
+          const minute = (time -time%60)/60;
+          const timeString = day.toString() + "D: " + hour.toString() + "H: " + minute.toString() + "M";
+
           let single_raffle = {
             image: item.image,
             name: item.name,
@@ -17,6 +26,7 @@ const Admin = ({vaultAccountData}) => {
             price_per_ticket: Number(item.ticketPrice),
             collection_size: Number(item.collection),
             winners: 0,
+            time: timeString
           }
           temp_data.push(single_raffle)
         }
@@ -66,6 +76,10 @@ const Admin = ({vaultAccountData}) => {
       {
         Header: 'NO. OF WINNERS',
         accessor: 'winners',
+      },
+      {
+        Header: 'TIME',
+        accessor: 'time',
       },
     ],
     []
