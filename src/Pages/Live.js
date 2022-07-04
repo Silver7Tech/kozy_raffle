@@ -8,28 +8,33 @@ const Live = ({vaultAccountData}) => {
     const [flag, setFlag] = useState(1);
     const [countTime, setCountTime] = useState(0);
     const [liveRaffles, setLiveRaffles] = useState(null);
+    const [loadingLiveRaffles, setLoadingLiveRaffles] = useState(false);
 
     useEffect(()=> {
+        console.log(currentRaffleIndex,vaultAccountData)
         if(vaultAccountData!=null && currentRaffleIndex!=null){
 
             let liveRaffle = [];
+            setLoadingLiveRaffles(true);
             vaultAccountData.raffles.map((item) => {
                 if(Number(item.endTimestamp)>Date.now()/1000){
                     liveRaffle.push(item)
                 }
             })
             setLiveRaffles(liveRaffle);
+
             if(liveRaffle.length!=0){
                 let time = vaultAccountData.raffles[currentRaffleIndex].endTimestamp;
                 setCountTime(Number(time))
             }
+            setLoadingLiveRaffles(false);
         }
-    },[currentRaffleIndex]);
+    },[currentRaffleIndex,vaultAccountData]);
 
-
-    if(liveRaffles!=null){
-        return (
-            <>
+    const liveRaffleRender = () =>{
+        if(loadingLiveRaffles==true){
+        } else {
+            return(
                 <div className="flex flex-col items-center w-full">
                     <p className="text-white font-bold text-2sm sm:text-3sm">KOZY KLUB <span className="text-green">LIVE</span></p>
                     <SwiperComponent vaultAccountData={vaultAccountData} currentRaffleIndex={currentRaffleIndex} setCurrentRaffleIndex={setCurrentRaffleIndex} activeTab={"live"} flag={flag}/>
@@ -50,16 +55,21 @@ const Live = ({vaultAccountData}) => {
                         :
                         <></>
                     }
-                    
                 </div>
-            </>
-        )
-    } else {
-        return(
-            <>
-            </>
-        )
+            )
+        }
     }
+    return (
+        <>
+            {
+                liveRaffles!=null?   
+                liveRaffleRender()
+                :
+                <></>
+            }
+        </>
+    )
+  
 
 
 }
