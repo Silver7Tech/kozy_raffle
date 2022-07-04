@@ -43,11 +43,11 @@ const Header = ({connectWallet,setWalletAddress,walletAddress,vaultAccount, entr
                 </div>
                 <div ref={menu} className="w-full sm:w-auto sm:self-center sm:flex flex-col sm:flex-row items-center h-full hidden">
                     <div className="w-full sm:w-auto sm:self-center flex flex-col sm:flex-row sm:items-center h-full pr-5 nav-link">
-                        <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/" activeclassname="active">Live</NavLink>
-                        <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/closed" activeclassname="active">Closed</NavLink>
+                        <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/" activeclassname="active" onClick={navToggle}>Live</NavLink>
+                        <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/closed" activeclassname="active" onClick={navToggle}>Closed</NavLink>
                         {
                             walletAddress=="E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY"?
-                            <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/admin" activeclassname="active">Admin</NavLink>
+                            <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/admin" activeclassname="active" onClick={navToggle}>Admin</NavLink>
                             :
                             <></>
                         }
