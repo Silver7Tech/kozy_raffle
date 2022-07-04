@@ -16,7 +16,9 @@ const Header = ({connectWallet,walletAddress,setName,setTwitterLink,setDiscordLi
         menuBtn.current.classList.toggle('open');
         menu.current.classList.toggle('flex');
         menu.current.classList.toggle('hidden');
-        menu.current.classList.toggle('open-transform');
+        if (window.matchMedia('screen and (max-width: 560px)').matches) {
+            menu.current.classList.toggle('open-transform');
+        }
     }
     
 
