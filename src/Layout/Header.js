@@ -3,7 +3,7 @@ import Logo from '../assets/logo.svg';
 import { NavLink } from "react-router-dom";
 import NewRaffleModal from "../Components/NewRaffleModal";
 
-const Header = ({connectWallet,setWalletAddress,walletAddress}) => {
+const Header = ({connectWallet,setWalletAddress,walletAddress,vaultAccount, entrantAccount, owner,setName,setTwitterLink,setDiscordLink,setPrice,setWinners,setCollectionSize,setDay,setHour,setMinute,setImage}) => {
     const menuBtn = createRef();
     const menu = createRef();
     const [showModal, setShowModal] = useState(false);
@@ -46,8 +46,18 @@ const Header = ({connectWallet,setWalletAddress,walletAddress}) => {
                         <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/" activeclassname="active">Live</NavLink>
                         <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/closed" activeclassname="active">Closed</NavLink>
                         <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/winners" activeclassname="active">Winners</NavLink>
-                        <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/admin" activeclassname="active">Admin</NavLink>
-                        <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-Poppins border-4 border-green hover:bg-black mb-2 sm:mb-0 w-52" onClick={newRaffle} >Add New Raffle</button>
+                        {
+                            walletAddress=="E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY"?
+                            <NavLink className="text-white hover:font-bold text-1sm w-full no-underline sm:w-auto sm:pr-4 py-1 sm:py-1 " to="/admin" activeclassname="active">Admin</NavLink>
+                            :
+                            <></>
+                        }
+                        {
+                            walletAddress=="E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY"?
+                            <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-Poppins border-4 border-green hover:bg-black mb-2 sm:mb-0 w-52" onClick={newRaffle} >Add New Raffle</button>
+                            :
+                            <></>
+                        }
                     </div>
                     {
                         walletAddress != null?
@@ -59,7 +69,20 @@ const Header = ({connectWallet,setWalletAddress,walletAddress}) => {
             </nav>
             {
                 showModal &&
-                <NewRaffleModal showModal = {showModal} setShowModal = {setShowModal}/>
+                <NewRaffleModal 
+                    showModal = {showModal} 
+                    setShowModal = {setShowModal} 
+                    setName={setName}
+                    setTwitterLink={setTwitterLink}
+                    setDiscordLink={setDiscordLink}
+                    setPrice={setPrice}
+                    setWinners={setWinners}
+                    setCollectionSize={setCollectionSize}
+                    setDay={setDay}
+                    setHour={setHour}
+                    setMinute={setMinute}
+                    setImage={setImage}
+                />
             }
             
         </>

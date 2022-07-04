@@ -20,11 +20,6 @@
             "name": "systemProgram",
             "isMut": false,
             "isSigner": false
-          },
-          {
-            "name": "rent",
-            "isMut": false,
-            "isSigner": false
           }
         ],
         "args": [
@@ -51,11 +46,6 @@
             "name": "systemProgram",
             "isMut": false,
             "isSigner": false
-          },
-          {
-            "name": "rent",
-            "isMut": false,
-            "isSigner": false
           }
         ],
         "args": [
@@ -70,7 +60,7 @@
         "accounts": [
           {
             "name": "vaultAccount",
-            "isMut": false,
+            "isMut": true,
             "isSigner": false
           },
           {
@@ -107,7 +97,7 @@
           },
           {
             "name": "ticketPrice",
-            "type": "u64"
+            "type": "string"
           },
           {
             "name": "collection",
@@ -382,6 +372,6 @@
       }
     ],
     "metadata": {
-        "address": "2cuRuE13tgsZfatnrnNjaQfnnEJnXR2m9Ae2ZkU26Lqc"
+        "address": "2CYFb3ivzu9r2BqATBzHpfpFinAE129YDmueuBJb336M"
     }
   }

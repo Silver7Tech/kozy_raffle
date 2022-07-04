@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow } from "swiper";
 import NFT1 from '../../assets/1.png';
@@ -14,8 +14,77 @@ import "swiper/css/navigation";
 import "./myswiper.css";
 import SlideNextButton from "./SlideNextButton";
 import SlidePrevButton from "./SlidePrevButton";
+import { BigNumber } from "bignumber.js";
+
 const NFTList = [NFT1, NFT2, NFT3, NFT4, NFT5];
-const SwiperComponent = ({activeTab}) => {
+const SwiperComponent = ({vaultAccountData,currentRaffleIndex,setCurrentRaffleIndex,activeTab,flag}) => {
+    const [NFTList, setNFTList] = useState([]);
+    const [liveIndexs, setLiveIndexs] = useState([]);
+
+    const setPrevIndex = () => {
+        if(liveIndexs.length==1){
+            setCurrentRaffleIndex(liveIndexs[0]-1)
+        } else {
+            let temp_index = 0;
+            liveIndexs.map((item,index) => {
+                if(item-1 == currentRaffleIndex){
+                    if(index == 0){
+                        setCurrentRaffleIndex(liveIndexs[liveIndexs.length-1]-1)
+                    } else {
+                        setCurrentRaffleIndex(temp_index-1);
+                    }
+                }
+                temp_index = item;
+            })
+        }
+    }
+
+    const setNextIndex = () => {
+        if(liveIndexs.length==1){
+            setCurrentRaffleIndex(liveIndexs[0]-1)
+        } else {
+            let temp_index = 0;
+            liveIndexs.map((item,index) => {
+                temp_index = item;
+                if(item-1 == currentRaffleIndex){
+                    if(index+1 == liveIndexs.length){
+                        setCurrentRaffleIndex(liveIndexs[0]-1)
+                    } else {
+                        setCurrentRaffleIndex(temp_index);
+                    }
+                }
+            })
+        }
+    }
+
+    useEffect(()=> {
+        if(vaultAccountData!=null){
+            let images = [];
+            let indexs = [];
+            vaultAccountData.raffles.map((item) => {
+                if(flag==1){
+                    if(Number(item.endTimestamp)>Date.now()/1000){
+                        images.push(item.image)
+                        indexs.push(item.index)
+                    }
+                } else {
+                    if(Number(item.endTimestamp)<Date.now()/1000){
+                        images.push(item.image)
+                        indexs.push(item.index)
+                    }
+                }
+            })
+
+            setNFTList(images);
+            setLiveIndexs(indexs);
+            if(indexs.length!=0){
+                setCurrentRaffleIndex(indexs[0]-1);
+            } else {
+                setCurrentRaffleIndex(null);
+            }
+        }
+    },[vaultAccountData])
+    
     return (
         <div className="w-full lg:w-11/12 mx-auto">
             <Swiper
@@ -60,10 +129,10 @@ const SwiperComponent = ({activeTab}) => {
                                     isActive 
                                     ?
                                     <div className="flex flex-row items-center">
-                                        <SlidePrevButton/>
+                                        <SlidePrevButton setPrevIndex={setPrevIndex}/>
                                         <img src={item} alt="NFT" className="w-imgSW sm:w-imgW"/>
                                         <img src={activeTab==="live" ? LiveCircle : ClosedCircle} alt="live" className="absolute left-imgSPad sm:left-imgPad" />
-                                        <SlideNextButton/>
+                                        <SlideNextButton setNextIndex={setNextIndex}/>
                                     </div>
                                     :
                                     isPrev || isNext

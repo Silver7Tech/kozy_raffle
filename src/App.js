@@ -10,6 +10,7 @@ import Header from './Layout/Header';
 import { Connection,  clusterApiUrl, PublicKey } from '@solana/web3.js';
 import { Program, AnchorProvider, web3 } from '@project-serum/anchor';
 import idl from './idl.json';
+import { BN } from "bn.js";
 // SystemProgram is a reference to the Solana runtime!
 const { SystemProgram, Keypair } = web3;
 const rentSysvar = web3.SYSVAR_RENT_PUBKEY;
@@ -24,14 +25,32 @@ const network = clusterApiUrl('devnet');
 const opts = {
   preflightCommitment: "processed"
 }
+
+
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
 function App() {
   const [walletAddress, setWalletAddress] = useState(null);
+  const [owner, setOwner] = useState(null)
   const [vaultAccount, setVaultAccount] = useState(null);
   const [vaultBump, setVaultBump] = useState(null);
   const [entrantAccount, setEntrantAccount] = useState(null);
   const [entrantBump, setEntrantBump] = useState(null);
+
+  const [name, setName] = useState('');
+  const [twitterLink, setTwitterLink] = useState('');
+  const [discordLink, setDiscordLink] = useState('');
+  const [price, setPrice] = useState(0);
+  const [winners, setWinners] = useState(0);
+  const [collectionSize, setCollectionSize] = useState(0);
+  const [day, setDay] = useState(0);
+  const [hour, setHour] = useState(0);
+  const [minute, setMinute] = useState(0);
+  const [image, setImage] = useState('');
+
+  const [vaultAccountData, setVaultAccountData] = useState(null);
+  const [entrantAccountDatas, setEntrantAccountData] = useState(null);
+
 
   // const []
   const checkIfWalletIsConnected = async () => {
@@ -72,36 +91,66 @@ function App() {
     const provider = new AnchorProvider(connection, window.solana, opts.preflightCommitment,);
     return provider;
   }
+  const getVaultAccount = async() => {
+    try {
+      const provider = getProvider();
+      const program = new Program(idl, programID, provider);
 
+      const [_pda, _bump] = 
+        await PublicKey.findProgramAddress(
+          [
+            Buffer.from("vaults"),
+            programID.toBuffer(),
+          ],
+          programID
+        );
+      setVaultAccount(_pda);
+      setVaultBump(_bump);
+
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
   const initializeVault = async() => {
     try {
 
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
 
-      const [_pda, _nonce] = 
+      
+      await program.rpc.initializeVault(
+        vaultBump,
+        {
+          accounts : {
+            owner: provider.wallet.publicKey,
+            vaultAccount: vaultAccount,
+            systemProgram: SystemProgram.programId,
+          },
+        }
+      )
+      const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
+      setVaultAccountData(vaultAccountDatas);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  const getEntrantAccount = async() => {
+    const provider = getProvider();
+    const program = new Program(idl, programID, provider);
+
+
+    try {
+      const [_pda, _bump] = 
         await PublicKey.findProgramAddress(
           [
-            Buffer.from("vault"),
+            Buffer.from("entrants"),
             programID.toBuffer(),
           ],
           programID
         );
-      setVaultAccount(_pda);
-      setVaultBump(_nonce);
-
-      await program.rpc.initializeVault(
-        _nonce,
-        {
-          accounts : {
-            owner: new PublicKey(walletAddress),
-            vaultAccount: _pda,
-            systemProgram: SystemProgram.programId,
-            rent: rentSysvar, 
-          },
-        }
-      )
-
+        setEntrantAccount(_pda);
+        setEntrantBump(_bump);
     } catch (error) {
       console.log("error", error);
     }
@@ -113,18 +162,47 @@ function App() {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
 
-      const [_pda, _nonce] = 
-        await PublicKey.findProgramAddress(
-          [
-            Buffer.from("entrant"),
-            programID.toBuffer(),
-          ],
-          programID
-        );
-        setEntrantAccount(_pda);
-        setEntrantBump(_nonce);
+
+      await program.rpc.initializeEntrant(
+        entrantBump,
+        {
+          accounts : {
+            owner: provider.wallet.publicKey,
+            entrantAccount: entrantAccount,
+            systemProgram: SystemProgram.programId,
+          },
+        }
+      )
+
+      const entrantAccountDatas = await program.account.vaultAccount.fetch(entrantAccount);
+      setEntrantAccountData(entrantAccountDatas);
+
     } catch (error) {
       console.log("error", error);
+    }
+  }
+  const createRaffle = async(name, image, discord, twitter, end_timestamp, ticket_price, collection) => {
+    try {
+      const provider = getProvider();
+      const program = new Program(idl, programID, provider);
+      let tx = await program.rpc.createRaffle(
+        name,
+        image,
+        discord,
+        twitter,
+        new BN(end_timestamp),
+        ticket_price.toString(),
+        new BN(collection),
+        {
+          accounts: {
+            vaultAccount: vaultAccount,
+            entrantAccount: entrantAccount,
+            owner: provider.wallet.publicKey,
+          },
+        }
+      )
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -138,11 +216,76 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if(walletAddress!=null){
-      initializeVault();
-      initializeEntrant();
+    if(walletAddress!=null){    
+      getVaultAccount();
+      getEntrantAccount()
     }
   },[walletAddress])
+  
+  useEffect(() => {
+    const setVaultAccountDataFromProgram = async() => {
+      try {
+        const provider = getProvider();
+        const program = new Program(idl, programID, provider);
+        const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
+        setVaultAccountData(vaultAccountDatas);
+      } catch (error) {
+        if(walletAddress == "E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY") {
+          initializeVault();
+        }
+      }
+    }
+    if(vaultAccount!=null && vaultBump!=null) {
+      setVaultAccountDataFromProgram();
+    }
+  },[vaultAccount, vaultBump])
+
+  
+  useEffect(() => {
+    const setEntrantsAccountDataFromProgram = async() => {
+      try {
+        const provider = getProvider();
+        const program = new Program(idl, programID, provider);
+        const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
+        setEntrantAccountData(entrantAccountDatas);
+      } catch (error) {
+
+        if(walletAddress == "E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY") {
+          initializeEntrant();
+        }
+      }
+    }
+
+    if(entrantAccount!=null && entrantBump!=null) {
+      setEntrantsAccountDataFromProgram();
+    }
+
+  },[entrantAccount, entrantBump])
+
+  useEffect(()=>{
+    if(name !='' && twitterLink!='' && discordLink!='' && price !=0 && collectionSize!=0 && image!='' && day>=0 && hour>=0 && minute>=0){
+        let end_timestamp = Math.floor(Date.now()/1000 + 3600 * 24 * Number(day) + 3600 * Number(hour) + Number(minute) * 60)
+        createRaffle(
+            name,
+            image,
+            discordLink,
+            twitterLink,
+            end_timestamp,
+            price,
+            collectionSize
+        )
+        setName('');
+        setTwitterLink('');
+        setDiscordLink('');
+        setPrice(0);
+        setWinners(0);
+        setCollectionSize(0);
+        setDay(0);
+        setHour(0);
+        setMinute(0);
+        setImage('');
+      }
+  },[name, twitterLink,discordLink,price,winners,collectionSize,day,hour,minute,image]);
   
   return (
     <div className='App'>
@@ -150,10 +293,23 @@ function App() {
         connectWallet={connectWallet}
         setWalletAddress={setWalletAddress}
         walletAddress={walletAddress}
+        vaultAccount={vaultAccount}
+        entrantAccount={entrantAccount}
+        owner={owner}
+        setName={setName}
+        setTwitterLink={setTwitterLink}
+        setDiscordLink={setDiscordLink}
+        setPrice={setPrice}
+        setWinners={setWinners}
+        setCollectionSize={setCollectionSize}
+        setDay={setDay}
+        setHour={setHour}
+        setMinute={setMinute}
+        setImage={setImage}
       />
       <Routes>
-        <Route path="/" exact element={<Live/>} />
-        <Route path="/closed" exact element={<Closed/>} />
+        <Route path="/" exact element={<Live vaultAccountData={vaultAccountData}/>} />
+        <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData}/>} />
         <Route path="/winners" exact element={<Winners/>} />
         <Route path="/purchase" exact element={<Purchase/>} />
       </Routes>

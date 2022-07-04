@@ -4,16 +4,26 @@ import Win from '../assets/win.svg';
 import Timer from "./Timer";
 import { useNavigate } from 'react-router-dom';
 
-const Footer = ({activeTab}) => {
+const Footer = ({ vaultAccountData,currentRaffleIndex,countTime,activeTab}) => {
     const navigate = useNavigate()
     const nextPageHandler = () => {
         if(activeTab === "live") {
-            navigate('/purchase');
+            console.log(Number(vaultAccountData.raffles[currentRaffleIndex].endTimestamp))
+            navigate('/purchase',{
+                state: {
+                    vaultAccountData: vaultAccountData,
+                    currentRaffleIndex: currentRaffleIndex,
+                    ticketPrice: Number(vaultAccountData.raffles[currentRaffleIndex].ticketPrice),
+                    ticketIndex: Number(vaultAccountData.raffles[currentRaffleIndex].ticketIndex),
+                    endTimestamp: Number(vaultAccountData.raffles[currentRaffleIndex].endTimestamp),
+                }
+            });
         }
         else if(activeTab === "closed") {
             navigate('/winners')
         }
     }
+
     return(
         <>
         <div className="footer flex flex-col sm:flex-row items-center mt-10 bg-white rounded-full w-fit px-16 sm:px-10 py-2 sm:py-5 mb-10 lg:mb-0">
@@ -21,7 +31,7 @@ const Footer = ({activeTab}) => {
                 activeTab === "live"
                 ?
                 <>
-                    <Timer/>
+                    <Timer countTime={countTime}/>
                 </>
                 :
                 <div className="flex flex-row text-2sm sm:text-4sm z-10 font-bold text-red">
