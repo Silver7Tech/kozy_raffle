@@ -7,14 +7,15 @@ import { useLocation } from "react-router-dom";
 
 const Purchase = () => {
     const [amount, setAmount] = useState(0);
-    const location = useLocation();
     const [curretRaffle, setCurrentRaffle] = useState(null)
+    const location = useLocation();
+
     
     useEffect(()=> {
         if(location.state.vaultAccountData!=null){
             setCurrentRaffle(location.state.vaultAccountData.raffles[location.state.currentRaffleIndex]);
         }
-    },[location.vaultAccountData])
+    },[location.state.vaultAccountData])
 
     const increaseAmount = () => {
         setAmount(amount+1)

@@ -5,6 +5,8 @@ import Live from './Pages/Live';
 import Closed from './Pages/Closed';
 import Winners from './Pages/Winners';
 import Purchase from './Pages/Purchase';
+import Admin from './Pages/Admin';
+
 import Header from './Layout/Header';
 
 import { Connection,  clusterApiUrl, PublicKey } from '@solana/web3.js';
@@ -174,7 +176,7 @@ function App() {
         }
       )
 
-      const entrantAccountDatas = await program.account.vaultAccount.fetch(entrantAccount);
+      const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
       setEntrantAccountData(entrantAccountDatas);
 
     } catch (error) {
@@ -201,6 +203,7 @@ function App() {
           },
         }
       )
+
     } catch (error) {
       console.log(error)
     }
@@ -218,7 +221,7 @@ function App() {
   useEffect(() => {
     if(walletAddress!=null){    
       getVaultAccount();
-      getEntrantAccount()
+      getEntrantAccount();
     }
   },[walletAddress])
   
@@ -312,6 +315,7 @@ function App() {
         <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData}/>} />
         <Route path="/winners" exact element={<Winners/>} />
         <Route path="/purchase" exact element={<Purchase/>} />
+        <Route path="/admin" exact element={<Admin vaultAccountData={vaultAccountData}/>} />
       </Routes>
     </div>
   );

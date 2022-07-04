@@ -8,7 +8,6 @@ const Footer = ({ vaultAccountData,currentRaffleIndex,countTime,activeTab}) => {
     const navigate = useNavigate()
     const nextPageHandler = () => {
         if(activeTab === "live") {
-            console.log(Number(vaultAccountData.raffles[currentRaffleIndex].endTimestamp))
             navigate('/purchase',{
                 state: {
                     vaultAccountData: vaultAccountData,
@@ -20,7 +19,13 @@ const Footer = ({ vaultAccountData,currentRaffleIndex,countTime,activeTab}) => {
             });
         }
         else if(activeTab === "closed") {
-            navigate('/winners')
+            console.log(vaultAccountData)
+            navigate('/winners',{
+                state:{
+                    vaultAccountData: vaultAccountData,
+                    currentRaffleIndex: currentRaffleIndex,
+                }
+            });
         }
     }
 

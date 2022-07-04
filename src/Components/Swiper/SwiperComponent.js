@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow } from "swiper";
-import NFT1 from '../../assets/1.png';
-import NFT2 from '../../assets/2.png';
-import NFT3 from '../../assets/3.png';
-import NFT4 from '../../assets/4.png';
-import NFT5 from '../../assets/1.png';
 import LiveCircle from '../../assets/live.svg';
 import ClosedCircle from '../../assets/closed.svg';
 import "swiper/css";
@@ -14,9 +9,7 @@ import "swiper/css/navigation";
 import "./myswiper.css";
 import SlideNextButton from "./SlideNextButton";
 import SlidePrevButton from "./SlidePrevButton";
-import { BigNumber } from "bignumber.js";
 
-const NFTList = [NFT1, NFT2, NFT3, NFT4, NFT5];
 const SwiperComponent = ({vaultAccountData,currentRaffleIndex,setCurrentRaffleIndex,activeTab,flag}) => {
     const [NFTList, setNFTList] = useState([]);
     const [liveIndexs, setLiveIndexs] = useState([]);
@@ -29,13 +22,13 @@ const SwiperComponent = ({vaultAccountData,currentRaffleIndex,setCurrentRaffleIn
             liveIndexs.map((item,index) => {
                 if(item-1 == currentRaffleIndex){
                     if(index == 0){
-                        setCurrentRaffleIndex(liveIndexs[liveIndexs.length-1]-1)
+                        temp_index = liveIndexs[0]-1
                     } else {
-                        setCurrentRaffleIndex(temp_index-1);
+                        temp_index = liveIndexs[index-1]-1
                     }
                 }
-                temp_index = item;
             })
+            setCurrentRaffleIndex(temp_index)
         }
     }
 
@@ -45,15 +38,15 @@ const SwiperComponent = ({vaultAccountData,currentRaffleIndex,setCurrentRaffleIn
         } else {
             let temp_index = 0;
             liveIndexs.map((item,index) => {
-                temp_index = item;
                 if(item-1 == currentRaffleIndex){
-                    if(index+1 == liveIndexs.length){
-                        setCurrentRaffleIndex(liveIndexs[0]-1)
+                    if(index+1 < liveIndexs.length){
+                        temp_index = liveIndexs[index+1]-1
                     } else {
-                        setCurrentRaffleIndex(temp_index);
+                        temp_index = liveIndexs[index]-1
                     }
                 }
             })
+            setCurrentRaffleIndex(temp_index)
         }
     }
 
@@ -84,13 +77,13 @@ const SwiperComponent = ({vaultAccountData,currentRaffleIndex,setCurrentRaffleIn
             }
         }
     },[vaultAccountData])
-    
+
     return (
         <div className="w-full lg:w-11/12 mx-auto">
             <Swiper
                 effect={"coverflow"}
                 grabCursor={true}
-                loop={true}
+                loop={false}
                 centeredSlides={true}
                 breakpoints = {{
                     320: {

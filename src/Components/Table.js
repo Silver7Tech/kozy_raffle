@@ -12,13 +12,19 @@ export function StatusPill({ value }) {
       </span>
     );
   }
-export function LinkFill({ value }) {
+export function TwitterFill({ value }) {
     return (
     <div className="flex flex-row">
         <a className="text-black text-0sm rounded-full bg-white p-3" href={value}><FaTwitter/></a>
-        <a className="text-black text-0sm rounded-full bg-white p-3 ml-2" href={value}><FaDiscord/></a>
     </div>
     );
+}
+export function DiscrodFill({ value }) {
+  return (
+  <div className="flex flex-row">
+      <a className="text-black text-0sm rounded-full bg-white p-3 ml-2" href={value}><FaDiscord/></a>
+  </div>
+  );
 }
 
 export function EditFill({ value }) {

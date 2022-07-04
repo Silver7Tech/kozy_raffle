@@ -58,7 +58,7 @@ const NewRaffleModal = ({showModal, setShowModal,setName,setTwitterLink,setDisco
                     },
                 });
 
-                const ImgHash = `https://ipfs.infura.io/ipfs/${resFile.data.IpfsHash}`;
+                const ImgHash = `https://ipfs.io/ipfs/${resFile.data.IpfsHash}`;
                 setImage(ImgHash)
                 console.log(ImgHash)
             } catch (error) {

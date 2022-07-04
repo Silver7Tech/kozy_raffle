@@ -7,13 +7,11 @@ const Live = ({vaultAccountData}) => {
     const [currentRaffleIndex, setCurrentRaffleIndex] = useState(0);
     const [flag, setFlag] = useState(1);
     const [countTime, setCountTime] = useState(0);
-    const [liveRaffles, setLiveRaffles] = useState(null);
+    const [liveRaffles, setLiveRaffles] = useState([]);
     const [loadingLiveRaffles, setLoadingLiveRaffles] = useState(false);
 
     useEffect(()=> {
-        console.log(currentRaffleIndex,vaultAccountData)
-        if(vaultAccountData!=null && currentRaffleIndex!=null){
-
+        if(vaultAccountData!=null){
             let liveRaffle = [];
             setLoadingLiveRaffles(true);
             vaultAccountData.raffles.map((item) => {
@@ -62,7 +60,7 @@ const Live = ({vaultAccountData}) => {
     return (
         <>
             {
-                liveRaffles!=null?   
+                liveRaffles.length!=0?   
                 liveRaffleRender()
                 :
                 <></>
