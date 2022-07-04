@@ -37,7 +37,7 @@ const Live = ({vaultAccountData}) => {
                     <p className="text-white font-bold text-2sm sm:text-3sm">KOZY KLUB <span className="text-green">LIVE</span></p>
                     <SwiperComponent vaultAccountData={vaultAccountData} currentRaffleIndex={currentRaffleIndex} setCurrentRaffleIndex={setCurrentRaffleIndex} activeTab={"live"} flag={flag}/>
     
-                    <div className="flex flex-col sm:flex-row text-white font-bold text-1sm sm:text-2sm mt-5">
+                    <div className="flex flex-col sm:flex-row text-white items-center font-bold text-1sm sm:text-2sm mt-5">
                         {vaultAccountData.raffles[currentRaffleIndex].name}
                         <div className="flex flex-row justify-center mt-2 sm:mt-0">
                             <a className="text-black text-1sm my-auto rounded-full bg-white p-2 ml-0 sm:ml-5" href={vaultAccountData.raffles[currentRaffleIndex].twitter}><FaTwitter/></a>
