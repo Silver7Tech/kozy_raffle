@@ -4,7 +4,7 @@ import Timer from "../Components/Timer";
 import { FaDiscord,FaTwitter } from "react-icons/fa"
 import { useLocation } from "react-router-dom";
 
-const Purchase = () => {
+const Purchase = ({buyTicket}) => {
     const [amount, setAmount] = useState(0);
     const [curretRaffle, setCurrentRaffle] = useState(null)
     const location = useLocation();
@@ -23,6 +23,12 @@ const Purchase = () => {
         var newAmount = amount -1
         if(newAmount >= 0) {
             setAmount(amount-1)
+        }
+    }
+
+    const purchaseTicket = async() => {
+        if(amount!=0 && curretRaffle!=null){
+            buyTicket(curretRaffle.index, amount);
         }
     }
     if(curretRaffle !=null){
@@ -54,7 +60,7 @@ const Purchase = () => {
                                 <input value={amount} className="mx-2 text-5sm py-1 rounded-md w-20 pl-5 font-bold" readOnly/>
                                 <button className="rounded-full text-white border-2 border-green px-5 py-3" onClick={increaseAmount}>+</button>
                             </div>
-                            <button className="bg-bitblue rounded-full px-8 py-2 text-white mt-3 text-tiny sm:text-0sm sm:ml-5 border-4 border-bitblue hover:bg-black">Purchase Raffle</button>
+                            <button className="bg-bitblue rounded-full px-8 py-2 text-white mt-3 text-tiny sm:text-0sm sm:ml-5 border-4 border-bitblue hover:bg-black" onClick={() => purchaseTicket()}>Purchase Raffle</button>
                         </div>
                     </div>
                 </div>

@@ -9,10 +9,15 @@ import Admin from './Pages/Admin';
 
 import Header from './Layout/Header';
 
-import { Connection,  clusterApiUrl, PublicKey } from '@solana/web3.js';
+import { Connection,  clusterApiUrl, PublicKey, LAMPORTS_PER_SOL  } from '@solana/web3.js';
 import { Program, AnchorProvider, web3 } from '@project-serum/anchor';
+import { TOKEN_PROGRAM_ID,AccountLayout } from "@solana/spl-token";
 import idl from './idl.json';
 import { BN } from "bn.js";
+
+const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new PublicKey(
+  'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL',
+);
 // SystemProgram is a reference to the Solana runtime!
 const { SystemProgram, Keypair } = web3;
 const rentSysvar = web3.SYSVAR_RENT_PUBKEY;
@@ -132,6 +137,7 @@ function App() {
       )
       const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
       setVaultAccountData(vaultAccountDatas);
+
     } catch (error) {
       console.log("error", error);
     }
@@ -219,6 +225,31 @@ function App() {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
+      const connection = new Connection(network, opts.preflightCommitment);
+      const treasury_wallet = new PublicKey('GUq1JBFXMan2zg7YuaaknLETwU4vKDETvdzHLTMDr43n');
+      const mintPublicKey = new PublicKey('Hbog7ueT2X3EobpS6rn84kxrnab8JXF2TmjGXhNheNJX');
+
+      const fromTokenAccount = (await PublicKey.findProgramAddress(
+        [
+            provider.wallet.publicKey.toBuffer(),
+            TOKEN_PROGRAM_ID.toBuffer(),
+            mintPublicKey.toBuffer(),
+        ],
+        SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
+      ))[0]
+
+
+      const toTokenAccount = (await PublicKey.findProgramAddress(
+        [
+            treasury_wallet.toBuffer(),
+            TOKEN_PROGRAM_ID.toBuffer(),
+            mintPublicKey.toBuffer(),
+        ],
+        SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
+      ))[0]
+
+
+      console.log(new BN(amount*1000))
       await program.rpc.buyTickets(
         new BN(index),
         new BN(amount),
@@ -226,12 +257,16 @@ function App() {
           accounts: {
             vaultAccount: vaultAccount,
             entrantAccount: entrantAccount,
-            owner: provider.wallet.publicKey,
+            proceeds:toTokenAccount,
+            buyerTokenAccount:fromTokenAccount,
+            buyerTransferAuthority:provider.wallet.publicKey,
+            tokenProgram: TOKEN_PROGRAM_ID,
           },
         }
       )
+
     } catch (error) {
-      
+      console.log(error)
     }
   }
 
@@ -258,6 +293,7 @@ function App() {
         const program = new Program(idl, programID, provider);
         const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
         setVaultAccountData(vaultAccountDatas);
+        console.log(vaultAccountDatas)
       } catch (error) {
         if(walletAddress == "E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY") {
           initializeVault();
@@ -277,6 +313,7 @@ function App() {
         const program = new Program(idl, programID, provider);
         const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
         setEntrantAccountData(entrantAccountDatas);
+        console.log(entrantAccountDatas)
       } catch (error) {
 
         if(walletAddress == "E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY") {
@@ -336,7 +373,7 @@ function App() {
         <Route path="/" exact element={<Live vaultAccountData={vaultAccountData}/>} />
         <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData}/>} />
         <Route path="/winners" exact element={<Winners/>} />
-        <Route path="/purchase" exact element={<Purchase/>} />
+        <Route path="/purchase" exact element={<Purchase buyTicket={buyTicket}/>} />
         <Route path="/admin" exact element={<Admin vaultAccountData={vaultAccountData}/>} />
       </Routes>
     </div>
