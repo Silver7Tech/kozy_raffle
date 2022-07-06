@@ -30,11 +30,13 @@ const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTi
         else if(activeTab === "closed") {
             let winner_publicKey = vaultAccountData[currentRaffleIndex].winner.publicKey.toBase58();
             let entites = 0;
+
             entrantAccountData.entrants.map((item)=> {
-                if(item.publicKey.toBase58()==winner_publicKey){
+                if(item.publicKey.toBase58()==winner_publicKey && item.index == vaultAccountData[currentRaffleIndex].index){
                     entites+=1;
                 }
             });
+
             if(vaultAccountData[currentRaffleIndex].winner.ticket==0){
                 winner_publicKey = '';
                 entites = 0;

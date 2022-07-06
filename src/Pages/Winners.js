@@ -21,7 +21,6 @@ const Winners = ({revealWinner}) => {
       if(location.state.vaultAccountData!=null){
         setWinnerAddress(location.state.winner_publicKey);
         setTicketNumber(location.state.entites);
-        console.log(location.state.winner_publicKey,location.state.entites)
         setCurrentRaffle(location.state.vaultAccountData[location.state.currentRaffleIndex]);
         revealWinner(location.state.vaultAccountData[location.state.currentRaffleIndex].index-1);
       }

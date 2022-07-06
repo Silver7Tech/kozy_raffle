@@ -23,7 +23,7 @@ const Admin = ({vaultAccountData}) => {
             name: item.name,
             twitter: item.twitter,
             discord: item.discord,
-            price_per_ticket: Number(item.ticketPrice),
+            price_per_ticket: String(Number(item.ticketPrice)/1000000000)+"$ KOZY",
             collection_size: Number(item.collection),
             winners: 0,
             time: timeString
