@@ -9,9 +9,10 @@ import Admin from './Pages/Admin';
 
 import Header from './Layout/Header';
 
-import { Connection,  clusterApiUrl, PublicKey, LAMPORTS_PER_SOL  } from '@solana/web3.js';
+import { Connection,  clusterApiUrl, PublicKey, SYSVAR_RECENT_BLOCKHASHES_PUBKEY  } from '@solana/web3.js';
 import { Program, AnchorProvider, web3 } from '@project-serum/anchor';
 import { TOKEN_PROGRAM_ID,AccountLayout } from "@solana/spl-token";
+
 import idl from './idl.json';
 import { BN } from "bn.js";
 
@@ -56,7 +57,9 @@ function App() {
   const [image, setImage] = useState('');
 
   const [vaultAccountData, setVaultAccountData] = useState(null);
-  const [entrantAccountDatas, setEntrantAccountData] = useState(null);
+
+
+  const [entrantAccountData, setEntrantAccountData] = useState(null);
 
 
   // const []
@@ -248,8 +251,6 @@ function App() {
         SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
       ))[0]
 
-
-      console.log(new BN(amount*1000))
       await program.rpc.buyTickets(
         new BN(index),
         new BN(amount),
@@ -267,6 +268,29 @@ function App() {
 
     } catch (error) {
       console.log(error)
+    }
+  }
+  const revealWinner = async(raffleIndex) => {
+    try {
+      const provider = getProvider();
+      const program = new Program(idl, programID, provider);
+      if(vaultAccountData!=null && walletAddress=='E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY'){
+        if(vaultAccountData.raffles[raffleIndex].winner.ticket==0){
+          await program.rpc.revealWinners(
+            new BN(raffleIndex+1),
+            {
+              accounts: {
+                vaultAccount: vaultAccount,
+                entrantAccount: entrantAccount,
+                recentBlockhashes: SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
+              },
+            }
+          )
+        }
+      }
+
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -293,7 +317,6 @@ function App() {
         const program = new Program(idl, programID, provider);
         const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
         setVaultAccountData(vaultAccountDatas);
-        console.log(vaultAccountDatas)
       } catch (error) {
         if(walletAddress == "E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY") {
           initializeVault();
@@ -313,7 +336,6 @@ function App() {
         const program = new Program(idl, programID, provider);
         const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
         setEntrantAccountData(entrantAccountDatas);
-        console.log(entrantAccountDatas)
       } catch (error) {
 
         if(walletAddress == "E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY") {
@@ -370,9 +392,9 @@ function App() {
         setImage={setImage}
       />
       <Routes>
-        <Route path="/" exact element={<Live vaultAccountData={vaultAccountData}/>} />
-        <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData}/>} />
-        <Route path="/winners" exact element={<Winners/>} />
+        <Route path="/" exact element={<Live vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData}  walletAddress={walletAddress}/>} />
+        <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData} />} />
+        <Route path="/winners" exact element={<Winners revealWinner={revealWinner}/>} />
         <Route path="/purchase" exact element={<Purchase buyTicket={buyTicket}/>} />
         <Route path="/admin" exact element={<Admin vaultAccountData={vaultAccountData}/>} />
       </Routes>

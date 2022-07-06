@@ -10,7 +10,7 @@ import { BN } from "bn.js";
 
 // SystemProgram is a reference to the Solana runtime!
 
-const Winners = () => {
+const Winners = ({revealWinner}) => {
   const [winnerAddress, setWinnerAddress] = useState(null);
   const [ticketNumber, setTicketNumber] = useState(null);
   const [curretRaffle, setCurrentRaffle] = useState(null)
@@ -19,20 +19,19 @@ const Winners = () => {
 
   useEffect(()=> {
       if(location.state.vaultAccountData!=null){
-        const closedRaffleWinner = location.state.vaultAccountData[location.state.currentRaffleIndex].winner;
-        const winnerWallet = new PublicKey(closedRaffleWinner.publicKey);
-        setWinnerAddress(closedRaffleWinner.publicKey);
-        setTicketNumber(closedRaffleWinner.ticket);
+        setWinnerAddress(location.state.winner_publicKey);
+        setTicketNumber(location.state.entites);
+        console.log(location.state.winner_publicKey,location.state.entites)
         setCurrentRaffle(location.state.vaultAccountData[location.state.currentRaffleIndex]);
-        
+        revealWinner(location.state.vaultAccountData[location.state.currentRaffleIndex].index-1);
       }
-  },[location.state.vaultAccountData])
+  },[location.state.vaultAccountData,location.state.currentRaffleIndex])
 
   const data = React.useMemo(
       () => [
         {
-          wallet_address: 'AnxcjLJDFVWEVBGkkd23ffg78ggfd09',
-          entries: '1',
+          wallet_address: location.state.winner_publicKey,
+          entries: location.state.entites,
         },
       ],
       []

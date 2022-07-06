@@ -4,26 +4,44 @@ import Win from '../assets/win.svg';
 import Timer from "./Timer";
 import { useNavigate } from 'react-router-dom';
 
-const Footer = ({ vaultAccountData,currentRaffleIndex,countTime,activeTab}) => {
+const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTime,walletAddress,activeTab}) => {
     const navigate = useNavigate()
     const nextPageHandler = () => {
         if(activeTab === "live") {
+            const raffleIndex = vaultAccountData[currentRaffleIndex].index;
+            let raffleEntrants = [];
+            entrantAccountData.entrants.map((item)=> {
+                if(item.index==raffleIndex){
+                    raffleEntrants.push(item.publicKey.toBase58())
+                }
+            });
             navigate('/purchase',{
                 state: {
-                    vaultAccountData: vaultAccountData,
+                    vaultAccountData:vaultAccountData,
                     currentRaffleIndex: currentRaffleIndex,
+                    raffleEntrants:raffleEntrants,
                     ticketPrice: Number(vaultAccountData[currentRaffleIndex].ticketPrice),
                     ticketIndex: Number(vaultAccountData[currentRaffleIndex].ticketIndex),
                     endTimestamp: Number(vaultAccountData[currentRaffleIndex].endTimestamp),
+                    walletAddress: walletAddress,
                 }
             });
         }
         else if(activeTab === "closed") {
-            console.log(vaultAccountData)
+            console.log(vaultAccountData[currentRaffleIndex].winner)
+            const winner_publicKey = vaultAccountData[currentRaffleIndex].winner.publicKey.toBase58();
+            let entites = 0;
+            entrantAccountData.entrants.map((item)=> {
+                if(item.publicKey.toBase58()==winner_publicKey){
+                    entites+=1;
+                }
+            });
             navigate('/winners',{
                 state:{
                     vaultAccountData: vaultAccountData,
                     currentRaffleIndex: currentRaffleIndex,
+                    winner_publicKey: winner_publicKey,
+                    entites: entites,
                 }
             });
         }
