@@ -11,6 +11,9 @@
 .swiper-slide img {
   border-radius: 1000px;
 }
+.swiper-slide-shadow-left {
+  opacity: 0 !important;
+}
 .swiper-slide{
   filter: blur(4px);
   display: flex;
