@@ -95,6 +95,14 @@ function App() {
       setWalletAddress(response.publicKey.toString());
     }
   };
+  const disconnect = async () => {
+    const { solana } = window;
+    if (solana) {
+      console.log(solana)
+      await solana.disconnect();
+      setWalletAddress(null);
+    }
+  };
 
   const getProvider = () => {
     const connection = new Connection(network, opts.preflightCommitment);
@@ -390,14 +398,21 @@ function App() {
         setHour={setHour}
         setMinute={setMinute}
         setImage={setImage}
+        disconnect={disconnect}
       />
-      <Routes>
-        <Route path="/" exact element={<Live vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData}  walletAddress={walletAddress}/>} />
-        <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData} />} />
-        <Route path="/winners" exact element={<Winners revealWinner={revealWinner}/>} />
-        <Route path="/purchase" exact element={<Purchase buyTicket={buyTicket}/>} />
-        <Route path="/admin" exact element={<Admin vaultAccountData={vaultAccountData}/>} />
-      </Routes>
+      {
+        walletAddress!=null?
+          <Routes>
+            <Route path="/" exact element={<Live vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData}  walletAddress={walletAddress}/>} />
+            <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData} />} />
+            <Route path="/winners" exact element={<Winners revealWinner={revealWinner}/>} />
+            <Route path="/purchase" exact element={<Purchase buyTicket={buyTicket}/>} />
+            <Route path="/admin" exact element={<Admin vaultAccountData={vaultAccountData}/>} />
+          </Routes>
+          :
+          <></>
+      }
+
     </div>
   );
 }

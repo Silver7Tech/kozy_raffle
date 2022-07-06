@@ -3,7 +3,7 @@ import Logo from '../assets/logo.svg';
 import { NavLink } from "react-router-dom";
 import NewRaffleModal from "../Components/NewRaffleModal";
 
-const Header = ({connectWallet,walletAddress,setName,setTwitterLink,setDiscordLink,setPrice,setWinners,setCollectionSize,setDay,setHour,setMinute,setImage}) => {
+const Header = ({connectWallet,walletAddress,setName,setTwitterLink,setDiscordLink,setPrice,setWinners,setCollectionSize,setDay,setHour,setMinute,setImage,disconnect}) => {
     const menuBtn = createRef();
     const menu = createRef();
     const [showModal, setShowModal] = useState(false);
@@ -21,8 +21,6 @@ const Header = ({connectWallet,walletAddress,setName,setTwitterLink,setDiscordLi
         }
     }
     
-
-
     return (
         <>
             <nav className="flex flex-col sm:flex-row w-11/12 justify-between items-center px-4 py-4 sm:px-6 mx-auto shadow sm:shadow-none">
@@ -65,7 +63,7 @@ const Header = ({connectWallet,walletAddress,setName,setTwitterLink,setDiscordLi
                     {
                         walletAddress !== null
                         ?
-                            <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-poppins hidden sm:flex border-4 border-green hover:bg-black" >Disconnect</button>
+                            <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-poppins hidden sm:flex border-4 border-green hover:bg-black" onClick={()=> disconnect()} >Disconnect</button>
                         :
                             <button className="hover:text-white rounded-full bg-green px-6 py-2 text-0sm text-white font-medium font-poppins hidden sm:flex border-4 border-green hover:bg-black" onClick={() => connectWallet()}>Connect Wallet</button>
                     }
