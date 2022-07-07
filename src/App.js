@@ -27,7 +27,7 @@ const rentSysvar = web3.SYSVAR_RENT_PUBKEY;
 const programID = new PublicKey(idl.metadata.address);
 
 // Set our network to devnet.
-const network = clusterApiUrl('devnet');
+const network = clusterApiUrl('mainnet-beta');
 
 // Controls how we want to acknowledge when a transaction is "done".
 const opts = {
@@ -341,53 +341,7 @@ function App() {
     }
   },[vaultAccount, vaultBump,AccountIsUpdating,entrantAccount, entrantBump])
   
-  // useEffect(() => {
-  //   const setVaultAccountDataFromProgram = async() => {
-  //     try {
-  //       const provider = getProvider();
-  //       const program = new Program(idl, programID, provider);
-  //       const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
-  //       setVaultAccountData(vaultAccountDatas);
-  //     } catch (error) {
-  //       if(walletAddress == process.env.REACT_APP_ADMIN_WALLET) {
-  //         initializeVault();
-  //       }
-  //     }
-  //   }
-  //   if(vaultAccount!=null && vaultBump!=null) {
-  //     setVaultAccountDataFromProgram();
-  //   }
-  //   if(vaultAccountIsUpdating==true){
-  //     setVaultAccountDataFromProgram();
-  //     setVaultAccountIsUpdating(false);
-  //   }
-  // },[vaultAccount, vaultBump,vaultAccountIsUpdating])
 
-  
-  // useEffect(() => {
-  //   const setEntrantsAccountDataFromProgram = async() => {
-  //     try {
-  //       const provider = getProvider();
-  //       const program = new Program(idl, programID, provider);
-  //       const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
-  //       setEntrantAccountData(entrantAccountDatas);
-  //     } catch (error) {
-
-  //       if(walletAddress == process.env.REACT_APP_ADMIN_WALLET) {
-  //         initializeEntrant();
-  //       }
-  //     }
-  //   }
-
-  //   if(entrantAccount!=null && entrantBump!=null) {
-  //     setEntrantsAccountDataFromProgram();
-  //   }
-  //   if(entranAccountIsUpdating==true){
-  //     setEntrantsAccountDataFromProgram();
-  //     setEntranAccountIsUpdating(false);
-  //   }
-
-  // },[entrantAccount, entrantBump,entranAccountIsUpdating])
 
   useEffect(()=>{
     if(name !='' && twitterLink!='' && discordLink!='' && price !=0 && collectionSize!=0 && image!='' && day>=0 && hour>=0 && minute>=0){
