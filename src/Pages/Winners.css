@@ -3,7 +3,7 @@
     overflow-x: hidden;
     height: 420px;
 }
-.winner_list thead tr th:nth-child(1) {
+.winner_list thead tr th:nth-child(1)  {
     padding-right: 470px;
 }
 /* .winner_list tbody tr td:nth-child(3) {

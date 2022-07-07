@@ -33,13 +33,14 @@ const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTi
 
             entrantAccountData.entrants.map((item)=> {
                 if(item.publicKey.toBase58()==winner_publicKey && item.index == vaultAccountData[currentRaffleIndex].index){
+                    console.log(item.publicKey.toBase58())
                     entites+=1;
                 }
             });
 
             if(vaultAccountData[currentRaffleIndex].winner.ticket==0){
-                winner_publicKey = '';
-                entites = 0;
+                winner_publicKey = 'None';
+                entites = '';
             }
             navigate('/winners',{
                 state:{

@@ -11,20 +11,17 @@ import { BN } from "bn.js";
 // SystemProgram is a reference to the Solana runtime!
 
 const Winners = ({revealWinner}) => {
-  const [winnerAddress, setWinnerAddress] = useState(null);
-  const [ticketNumber, setTicketNumber] = useState(null);
   const [curretRaffle, setCurrentRaffle] = useState(null)
 
   const location = useLocation();
 
   useEffect(()=> {
+    console.log(location.state.vaultAccountData.length)
       if(location.state.vaultAccountData!=null){
-        setWinnerAddress(location.state.winner_publicKey);
-        setTicketNumber(location.state.entites);
         setCurrentRaffle(location.state.vaultAccountData[location.state.currentRaffleIndex]);
         revealWinner(location.state.vaultAccountData[location.state.currentRaffleIndex].index-1);
       }
-  },[location.state.vaultAccountData,location.state.currentRaffleIndex])
+  },[location.state.vaultAccountData])
 
   const data = React.useMemo(
       () => [

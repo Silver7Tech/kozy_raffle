@@ -80,7 +80,7 @@ const Purchase = ({buyTicket}) => {
                         <p className="text-white text-0sm">No. of uniqe wallets : {walletCount}</p>
                         <p className="text-white text-0sm">Collection Size : {curretRaffle.collection}</p>
                         <p className="text-white font-bold text-1sm mt-5">NO. OF TICKETS owned : {myTicketCount}</p>
-                        <p className="text-white font-bold text-1sm">PRICE PER TICKET : {location.state.ticketPrice / 1000000000} $KOZY</p>
+                        <p className="text-white font-bold text-1sm">PRICE PER TICKET : {location.state.ticketPrice / 100} $KOZY</p>
                         <div className="flex flex-col sm:flex-row justify-between items-center mt-5">
                             <div className="flex flex-row justify-center items-center mt-3">
                                 <button className="rounded-full text-white border-2 border-red px-5 py-3" onClick={decreaseAmount}>-</button>

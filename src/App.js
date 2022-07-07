@@ -39,7 +39,6 @@ window.Buffer = window.Buffer || require('buffer').Buffer;
 
 function App() {
   const [walletAddress, setWalletAddress] = useState(null);
-  const [owner, setOwner] = useState(null)
   const [vaultAccount, setVaultAccount] = useState(null);
   const [vaultBump, setVaultBump] = useState(null);
   const [entrantAccount, setEntrantAccount] = useState(null);
@@ -57,9 +56,12 @@ function App() {
   const [image, setImage] = useState('');
 
   const [vaultAccountData, setVaultAccountData] = useState(null);
-
+  const [AccountIsUpdating, setAccountIsUpdating] = useState(true);
+  const [isVaultInit, setVaultInit] = useState(false);
 
   const [entrantAccountData, setEntrantAccountData] = useState(null);
+  const [isEntrantInit, setEntrantInit] = useState(false);
+
 
 
   // const []
@@ -83,6 +85,7 @@ function App() {
       console.log("error", error);
     }
   };
+
 
   /*
    * Let's define this method so our code doesn't break.
@@ -134,7 +137,6 @@ function App() {
 
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
-
       
       await program.rpc.initializeVault(
         vaultBump,
@@ -220,14 +222,10 @@ function App() {
           },
         }
       )
-      
-
       const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
       setVaultAccountData(vaultAccountDatas);
       const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
       setEntrantAccountData(entrantAccountDatas);
-
-
     } catch (error) {
       console.log(error)
     }
@@ -236,9 +234,8 @@ function App() {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
-      const connection = new Connection(network, opts.preflightCommitment);
-      const treasury_wallet = new PublicKey('GUq1JBFXMan2zg7YuaaknLETwU4vKDETvdzHLTMDr43n');
-      const mintPublicKey = new PublicKey('Hbog7ueT2X3EobpS6rn84kxrnab8JXF2TmjGXhNheNJX');
+      const treasury_wallet = new PublicKey(process.env.REACT_APP_TREASURY_WALLET);
+      const mintPublicKey = new PublicKey(process.env.REACT_APP_KOZZY);
 
       const fromTokenAccount = (await PublicKey.findProgramAddress(
         [
@@ -273,7 +270,7 @@ function App() {
           },
         }
       )
-
+      setAccountIsUpdating(true);
     } catch (error) {
       console.log(error)
     }
@@ -282,7 +279,8 @@ function App() {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
-      if(vaultAccountData!=null && walletAddress=='E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY'){
+      if(vaultAccountData!=null && walletAddress==process.env.REACT_APP_ADMIN_WALLET){
+        console.log(vaultAccountData.raffles[raffleIndex].winner)
         if(vaultAccountData.raffles[raffleIndex].winner.ticket==0){
           await program.rpc.revealWinners(
             new BN(raffleIndex+1),
@@ -296,7 +294,6 @@ function App() {
           )
         }
       }
-
     } catch (error) {
       console.log(error);
     }
@@ -317,46 +314,80 @@ function App() {
       getEntrantAccount();
     }
   },[walletAddress])
-  
-  useEffect(() => {
-    const setVaultAccountDataFromProgram = async() => {
+
+  useEffect(()=> {
+    const setAccountDataFromProgram = async() => {
       try {
         const provider = getProvider();
         const program = new Program(idl, programID, provider);
         const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
-        setVaultAccountData(vaultAccountDatas);
-      } catch (error) {
-        if(walletAddress == "E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY") {
-          initializeVault();
-        }
-      }
-    }
-    if(vaultAccount!=null && vaultBump!=null) {
-      setVaultAccountDataFromProgram();
-    }
-  },[vaultAccount, vaultBump])
-
-  
-  useEffect(() => {
-    const setEntrantsAccountDataFromProgram = async() => {
-      try {
-        const provider = getProvider();
-        const program = new Program(idl, programID, provider);
         const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
+        console.log(vaultAccountDatas)
+        setVaultAccountData(vaultAccountDatas);
         setEntrantAccountData(entrantAccountDatas);
       } catch (error) {
-
-        if(walletAddress == "E6necYBrzVVgixdeupTVUtRsU7UQf7nLCg8q913xxADY") {
+        if(walletAddress == process.env.REACT_APP_ADMIN_WALLET) {
+          initializeVault();
           initializeEntrant();
         }
       }
     }
-
-    if(entrantAccount!=null && entrantBump!=null) {
-      setEntrantsAccountDataFromProgram();
+    if(vaultAccount!=null && vaultBump!=null&&entrantAccount!=null && entrantBump!=null) {
+      setAccountDataFromProgram();
     }
+    if(AccountIsUpdating==true){
+      setAccountDataFromProgram();
+      setAccountIsUpdating(false);
+    }
+  },[vaultAccount, vaultBump,AccountIsUpdating,entrantAccount, entrantBump])
+  
+  // useEffect(() => {
+  //   const setVaultAccountDataFromProgram = async() => {
+  //     try {
+  //       const provider = getProvider();
+  //       const program = new Program(idl, programID, provider);
+  //       const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
+  //       setVaultAccountData(vaultAccountDatas);
+  //     } catch (error) {
+  //       if(walletAddress == process.env.REACT_APP_ADMIN_WALLET) {
+  //         initializeVault();
+  //       }
+  //     }
+  //   }
+  //   if(vaultAccount!=null && vaultBump!=null) {
+  //     setVaultAccountDataFromProgram();
+  //   }
+  //   if(vaultAccountIsUpdating==true){
+  //     setVaultAccountDataFromProgram();
+  //     setVaultAccountIsUpdating(false);
+  //   }
+  // },[vaultAccount, vaultBump,vaultAccountIsUpdating])
 
-  },[entrantAccount, entrantBump])
+  
+  // useEffect(() => {
+  //   const setEntrantsAccountDataFromProgram = async() => {
+  //     try {
+  //       const provider = getProvider();
+  //       const program = new Program(idl, programID, provider);
+  //       const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
+  //       setEntrantAccountData(entrantAccountDatas);
+  //     } catch (error) {
+
+  //       if(walletAddress == process.env.REACT_APP_ADMIN_WALLET) {
+  //         initializeEntrant();
+  //       }
+  //     }
+  //   }
+
+  //   if(entrantAccount!=null && entrantBump!=null) {
+  //     setEntrantsAccountDataFromProgram();
+  //   }
+  //   if(entranAccountIsUpdating==true){
+  //     setEntrantsAccountDataFromProgram();
+  //     setEntranAccountIsUpdating(false);
+  //   }
+
+  // },[entrantAccount, entrantBump,entranAccountIsUpdating])
 
   useEffect(()=>{
     if(name !='' && twitterLink!='' && discordLink!='' && price !=0 && collectionSize!=0 && image!='' && day>=0 && hour>=0 && minute>=0){
@@ -405,7 +436,7 @@ function App() {
           <Routes>
             <Route path="/" exact element={<Live vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData}  walletAddress={walletAddress}/>} />
             <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData} />} />
-            <Route path="/winners" exact element={<Winners revealWinner={revealWinner}/>} />
+            <Route path="/winners" exact element={<Winners revealWinner={revealWinner} />} />
             <Route path="/purchase" exact element={<Purchase buyTicket={buyTicket}/>} />
             <Route path="/admin" exact element={<Admin vaultAccountData={vaultAccountData}/>} />
           </Routes>

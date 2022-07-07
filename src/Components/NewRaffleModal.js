@@ -3,17 +3,7 @@ import { FaDiscord,FaTwitter } from "react-icons/fa"
 import axios from 'axios';
 
 const NewRaffleModal = ({showModal, setShowModal,setName,setTwitterLink,setDiscordLink,setPrice,setWinners,setCollectionSize,setDay,setHour,setMinute,setImage}) => {
-    // const [name, setName] = useState('');
-    // const [twitterLink, setTwitterLink] = useState('');
-    // const [discordLink, setDiscordLink] = useState('');
-    // const [price, setPrice] = useState(0);
-    // const [winners, setWinners] = useState(0);
-    // const [collectionSize, setCollectionSize] = useState(0);
-    // const [day, setDay] = useState(0);
-    // const [hour, setHour] = useState(0);
-    // const [minute, setMinute] = useState(0);
     const [fileImg, setFileImg] = useState(null);
-    // const [image, setImage] = useState(null);
 
     
     const modalRef = useRef();

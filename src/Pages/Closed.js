@@ -32,7 +32,7 @@ const Closed = ({vaultAccountData,entrantAccountData}) => {
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row text-white font-bold text-1sm mt-5">
-                        <div className="text-center">NO. OF TICKETS SOLD :&nbsp; <span className="text-green">{closedRaffles[currentRaffleIndex].ticketIndex}/{vaultAccountData.raffles[currentRaffleIndex].collection}</span></div>
+                        <div className="text-center">NO. OF TICKETS SOLD :&nbsp; <span className="text-green">{closedRaffles[currentRaffleIndex].ticketIndex}/{closedRaffles[currentRaffleIndex].collection}</span></div>
                         <div className="text-center"><span className="hidden sm:inline">&nbsp;|</span> NO. OF WINNERS :&nbsp; <span className="text-bitblue">1</span></div>
                     </div> 
                     <Footer vaultAccountData={closedRaffles} entrantAccountData={entrantAccountData} currentRaffleIndex={currentRaffleIndex} countTime={0} activeTab={"closed"}/>
