@@ -17,7 +17,7 @@ const SwiperComponent = ({vaultAccountData,currentRaffleIndex,setCurrentRaffleIn
         setCurrentRaffleIndex(e.realIndex);
     }
     useEffect(()=> {
-        if(vaultAccountData!=null){
+        if(vaultAccountData!==null){
             var nftlist = [];
             vaultAccountData.map((item, index) => {
                 if(activeTab === "live"){

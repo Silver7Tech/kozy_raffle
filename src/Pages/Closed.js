@@ -7,7 +7,7 @@ const Closed = ({vaultAccountData,entrantAccountData}) => {
     const [closedRaffles, setClosedRaffles] = useState(null);
 
     useEffect(()=> {
-        if(vaultAccountData!=null && currentRaffleIndex!=null){
+        if(vaultAccountData!==null && currentRaffleIndex!==null){
             let closedRaffle = [];
             vaultAccountData.raffles.map((item) => {
                 if(Number(item.endTimestamp)<Date.now()/1000){
@@ -18,7 +18,7 @@ const Closed = ({vaultAccountData,entrantAccountData}) => {
         }
     },[currentRaffleIndex]);
 
-    if(closedRaffles!=null && currentRaffleIndex!=null){
+    if(closedRaffles!==null && currentRaffleIndex!==null){
         return(
             <>
                 <div className="flex flex-col items-center w-full">

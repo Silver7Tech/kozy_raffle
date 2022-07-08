@@ -6,13 +6,12 @@ import Footer from "../Components/Footer";
 const Live = ({vaultAccountData,entrantAccountData,walletAddress}) => {
     const [currentRaffleIndex, setCurrentRaffleIndex] = useState(0);
     const [countTime, setCountTime] = useState(0);
-    const [loadingLiveRaffles, setLoadingLiveRaffles] = useState(false);
     const [liveRaffles, setLiveRaffles] = useState([]);
 
     useEffect(()=> {
-        if(vaultAccountData!=null){
+        if(vaultAccountData!==null){
             let liveRaffle = [];
-            setLoadingLiveRaffles(true);
+            // eslint-disable-next-line
             vaultAccountData.raffles.map((item) => {
                 if(Number(item.endTimestamp)>Date.now()/1000){
                     liveRaffle.push(item);
@@ -23,7 +22,6 @@ const Live = ({vaultAccountData,entrantAccountData,walletAddress}) => {
                 let time = liveRaffle[currentRaffleIndex].endTimestamp;
                 setCountTime(Number(time))
             }
-            setLoadingLiveRaffles(false);
         }
         
     },[currentRaffleIndex,vaultAccountData]);
@@ -32,7 +30,7 @@ const Live = ({vaultAccountData,entrantAccountData,walletAddress}) => {
     return(
         <>
             {
-                liveRaffles.length!=0?
+                liveRaffles.length!==0?
                     <div className="flex flex-col items-center w-full">
                         <p className="text-white font-bold text-2sm sm:text-3sm">KOZY KLUB <span className="text-green">LIVE</span></p>
                         <SwiperComponent vaultAccountData={liveRaffles} currentRaffleIndex={currentRaffleIndex} setCurrentRaffleIndex={setCurrentRaffleIndex} activeTab={"live"}/>

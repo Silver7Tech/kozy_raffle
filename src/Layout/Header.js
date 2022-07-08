@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { createRef, useState } from "react";
 import Logo from '../assets/logo.svg';
 import { NavLink } from "react-router-dom";
 import NewRaffleModal from "../Components/NewRaffleModal";

@@ -3,8 +3,6 @@ import Blur1 from '../assets/Blur1.svg';
 import Timer from "../Components/Timer";
 import { FaDiscord,FaTwitter } from "react-icons/fa"
 import { useLocation } from "react-router-dom";
-import { PublicKey } from '@solana/web3.js';
-import { BN } from "bn.js";
 
 const Purchase = ({buyTicket}) => {
     const [amount, setAmount] = useState(0);
@@ -20,19 +18,19 @@ const Purchase = ({buyTicket}) => {
             let newWallet = [];
             let ticketCount = 0;
             location.state.raffleEntrants.map((address) => {
-                if(address==location.state.walletAddress){
+                if(address===location.state.walletAddress){
                     ticketCount+=1;
                 }
-                if(newWallet.length==0){
+                if(newWallet.length===0){
                     newWallet.push(address);
                 } else {
                     let flag = false;
                     newWallet.map((item) => {
-                        if(item==address){
+                        if(item===address){
                             flag = true;
                         }
                     })
-                    if (flag==false){
+                    if (flag===false){
                         newWallet.push(address)
                     }
                 }
@@ -58,7 +56,7 @@ const Purchase = ({buyTicket}) => {
             buyTicket(curretRaffle.index, amount);
         }
     }
-    if(curretRaffle !=null){
+    if(curretRaffle !==null){
         return(
             <>
                 <div className="flex flex-col md:flex-row items-center justify-evenly sm:mt-10">

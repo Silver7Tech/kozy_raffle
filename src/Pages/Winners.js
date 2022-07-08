@@ -2,11 +2,9 @@ import React, {useState,useEffect} from "react";
 import Win from '../assets/win.svg'
 import { FaDiscord,FaTwitter } from "react-icons/fa"
 import Blur1 from '../assets/Blur1.svg';
-import TableComponent, { StatusPill } from "../Components/Table";
+import TableComponent from "../Components/Table";
 import './Winners.css'
 import { useLocation } from "react-router-dom";
-import {PublicKey } from '@solana/web3.js';
-import { BN } from "bn.js";
 
 // SystemProgram is a reference to the Solana runtime!
 
@@ -16,8 +14,7 @@ const Winners = ({revealWinner}) => {
   const location = useLocation();
 
   useEffect(()=> {
-    console.log(location.state.vaultAccountData.length)
-      if(location.state.vaultAccountData!=null){
+      if(location.state.vaultAccountData!==null){
         setCurrentRaffle(location.state.vaultAccountData[location.state.currentRaffleIndex]);
         revealWinner(location.state.vaultAccountData[location.state.currentRaffleIndex].index-1);
       }
@@ -46,7 +43,7 @@ const Winners = ({revealWinner}) => {
       ],
       []
   )
-  if(curretRaffle!=null){
+  if(curretRaffle!==null){
     return (
       <>
         <p className="flex flex-col sm:flex-row justify-center items-center text-white font-bold text-2sm sm:text-3sm">

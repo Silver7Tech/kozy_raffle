@@ -11,7 +11,7 @@ import Header from './Layout/Header';
 
 import { Connection,  clusterApiUrl, PublicKey, SYSVAR_RECENT_BLOCKHASHES_PUBKEY  } from '@solana/web3.js';
 import { Program, AnchorProvider, web3 } from '@project-serum/anchor';
-import { TOKEN_PROGRAM_ID,AccountLayout } from "@solana/spl-token";
+import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 
 import idl from './idl.json';
 import { BN } from "bn.js";
@@ -20,8 +20,7 @@ const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new PublicKey(
   'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL',
 );
 // SystemProgram is a reference to the Solana runtime!
-const { SystemProgram, Keypair } = web3;
-const rentSysvar = web3.SYSVAR_RENT_PUBKEY;
+const { SystemProgram } = web3;
 
 // Get our program's id from the IDL file.
 const programID = new PublicKey(idl.metadata.address);
@@ -57,10 +56,8 @@ function App() {
 
   const [vaultAccountData, setVaultAccountData] = useState(null);
   const [AccountIsUpdating, setAccountIsUpdating] = useState(true);
-  const [isVaultInit, setVaultInit] = useState(false);
 
   const [entrantAccountData, setEntrantAccountData] = useState(null);
-  const [isEntrantInit, setEntrantInit] = useState(false);
 
 
 
@@ -96,12 +93,12 @@ function App() {
     if (solana) {
       const response = await solana.connect();
       setWalletAddress(response.publicKey.toString());
+      console.log(response.publicKey.toString())
     }
   };
   const disconnect = async () => {
     const { solana } = window;
     if (solana) {
-      console.log(solana)
       await solana.disconnect();
       setWalletAddress(null);
     }
@@ -114,9 +111,6 @@ function App() {
   }
   const getVaultAccount = async() => {
     try {
-      const provider = getProvider();
-      const program = new Program(idl, programID, provider);
-
       const [_pda, _bump] = 
         await PublicKey.findProgramAddress(
           [
@@ -157,10 +151,6 @@ function App() {
   }
 
   const getEntrantAccount = async() => {
-    const provider = getProvider();
-    const program = new Program(idl, programID, provider);
-
-
     try {
       const [_pda, _bump] = 
         await PublicKey.findProgramAddress(
@@ -206,7 +196,7 @@ function App() {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
-      let tx = await program.rpc.createRaffle(
+      await program.rpc.createRaffle(
         name,
         image,
         discord,
@@ -279,9 +269,9 @@ function App() {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
-      if(vaultAccountData!=null && walletAddress==process.env.REACT_APP_ADMIN_WALLET){
+      if(vaultAccountData!==null && walletAddress===process.env.REACT_APP_ADMIN_WALLET){
         console.log(vaultAccountData.raffles[raffleIndex].winner)
-        if(vaultAccountData.raffles[raffleIndex].winner.ticket==0){
+        if(vaultAccountData.raffles[raffleIndex].winner.ticket===0){
           await program.rpc.revealWinners(
             new BN(raffleIndex+1),
             {
@@ -309,7 +299,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if(walletAddress!=null){    
+    if(walletAddress!==null){    
       getVaultAccount();
       getEntrantAccount();
     }
@@ -326,16 +316,16 @@ function App() {
         setVaultAccountData(vaultAccountDatas);
         setEntrantAccountData(entrantAccountDatas);
       } catch (error) {
-        if(walletAddress == process.env.REACT_APP_ADMIN_WALLET) {
+        if(walletAddress === process.env.REACT_APP_ADMIN_WALLET) {
           initializeVault();
           initializeEntrant();
         }
       }
     }
-    if(vaultAccount!=null && vaultBump!=null&&entrantAccount!=null && entrantBump!=null) {
+    if(vaultAccount!==null && vaultBump!==null&&entrantAccount!==null && entrantBump!==null) {
       setAccountDataFromProgram();
     }
-    if(AccountIsUpdating==true){
+    if(AccountIsUpdating===true){
       setAccountDataFromProgram();
       setAccountIsUpdating(false);
     }
@@ -344,7 +334,7 @@ function App() {
 
 
   useEffect(()=>{
-    if(name !='' && twitterLink!='' && discordLink!='' && price !=0 && collectionSize!=0 && image!='' && day>=0 && hour>=0 && minute>=0){
+    if(name !=='' && twitterLink!=='' && discordLink!=='' && price !==0 && collectionSize!==0 && image!=='' && day>=0 && hour>=0 && minute>=0){
         let end_timestamp = Math.floor(Date.now()/1000 + 3600 * 24 * Number(day) + 3600 * Number(hour) + Number(minute) * 60)
         createRaffle(
             name,
@@ -386,7 +376,7 @@ function App() {
         disconnect={disconnect}
       />
       {
-        walletAddress!=null?
+        walletAddress!==null?
           <Routes>
             <Route path="/" exact element={<Live vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData}  walletAddress={walletAddress}/>} />
             <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData} />} />

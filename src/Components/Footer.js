@@ -11,7 +11,7 @@ const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTi
             const raffleIndex = vaultAccountData[currentRaffleIndex].index;
             let raffleEntrants = [];
             entrantAccountData.entrants.map((item)=> {
-                if(item.index==raffleIndex){
+                if(item.index===raffleIndex){
                     raffleEntrants.push(item.publicKey.toBase58())
                 }
             });
@@ -32,13 +32,13 @@ const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTi
             let entites = 0;
 
             entrantAccountData.entrants.map((item)=> {
-                if(item.publicKey.toBase58()==winner_publicKey && item.index == vaultAccountData[currentRaffleIndex].index){
+                if(item.publicKey.toBase58()===winner_publicKey && item.index === vaultAccountData[currentRaffleIndex].index){
                     console.log(item.publicKey.toBase58())
                     entites+=1;
                 }
             });
 
-            if(vaultAccountData[currentRaffleIndex].winner.ticket==0){
+            if(vaultAccountData[currentRaffleIndex].winner.ticket===0){
                 winner_publicKey = 'None';
                 entites = '';
             }
