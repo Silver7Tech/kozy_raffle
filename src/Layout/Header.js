@@ -25,7 +25,7 @@ const Header = ({connectWallet,walletAddress,setName,setTwitterLink,setDiscordLi
         <>
             <nav className="flex flex-col sm:flex-row w-11/12 justify-between items-center px-4 py-4 sm:px-6 mx-auto shadow sm:shadow-none">
                 <div className="w-full sm:w-auto self-start sm:self-center flex flex-row sm:flex-none flex-no-wrap justify-between items-center">
-                    <img src={Logo} alt="Logo"/>
+                    <NavLink to="/" activeclassname="active"><img src={Logo} alt="Logo"/></NavLink>
                     <div className="sm:hidden block flex flex-row items-center">
                         {
                             walletAddress !== null?

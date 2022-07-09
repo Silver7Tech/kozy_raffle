@@ -60,7 +60,7 @@ const NewRaffleModal = ({showModal, setShowModal,setName,setTwitterLink,setDisco
 
     return(
         <>
-            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" onClick={closeModal} ref={modalRef}>
+            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-20" onClick={closeModal} ref={modalRef}>
                 <form onSubmit={upload}>
                 <div className="relative top-20 mx-auto border w-11/12 sm:w-ModalW shadow-lg rounded-lg bg-black text-white px-5 sm:px-16 py-10">
                     <div
