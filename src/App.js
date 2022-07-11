@@ -26,7 +26,7 @@ const { SystemProgram } = web3;
 const programID = new PublicKey(idl.metadata.address);
 
 // Set our network to devnet.
-const network = clusterApiUrl('mainnet-beta');
+const network = clusterApiUrl('devnet');
 
 // Controls how we want to acknowledge when a transaction is "done".
 const opts = {
@@ -93,7 +93,6 @@ function App() {
     if (solana) {
       const response = await solana.connect();
       setWalletAddress(response.publicKey.toString());
-      console.log(response.publicKey.toString())
     }
   };
   const disconnect = async () => {
@@ -214,6 +213,7 @@ function App() {
       )
       const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
       setVaultAccountData(vaultAccountDatas);
+      console.log(vaultAccountDatas)
       const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
       setEntrantAccountData(entrantAccountDatas);
     } catch (error) {
@@ -270,7 +270,6 @@ function App() {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
       if(vaultAccountData!==null && walletAddress===process.env.REACT_APP_ADMIN_WALLET){
-        console.log(vaultAccountData.raffles[raffleIndex].winner)
         if(vaultAccountData.raffles[raffleIndex].winner.ticket===0){
           await program.rpc.revealWinners(
             new BN(raffleIndex+1),
@@ -284,6 +283,25 @@ function App() {
           )
         }
       }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const closeRaffle = async(raffleIndex) => {
+    try {
+      const provider = getProvider();
+      const program = new Program(idl, programID, provider);
+      await program.rpc.closeRaffle(
+        new BN(raffleIndex+1),
+        {
+          accounts: {
+            vaultAccount: vaultAccount,
+            entrantAccount: entrantAccount,
+            owner: provider.wallet.publicKey,
+          },
+        }
+      )
     } catch (error) {
       console.log(error);
     }
@@ -313,6 +331,7 @@ function App() {
         const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
         const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
         console.log(vaultAccountDatas)
+        console.log(entrantAccountDatas)
         setVaultAccountData(vaultAccountDatas);
         setEntrantAccountData(entrantAccountDatas);
       } catch (error) {
@@ -379,7 +398,7 @@ function App() {
         walletAddress!==null?
           <Routes>
             <Route path="/" exact element={<Live vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData}  walletAddress={walletAddress}/>} />
-            <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData} />} />
+            <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData} walletAddress={walletAddress} closeRaffle={closeRaffle}/>} />
             <Route path="/winners" exact element={<Winners revealWinner={revealWinner} />} />
             <Route path="/purchase" exact element={<Purchase buyTicket={buyTicket}/>} />
             <Route path="/admin" exact element={<Admin vaultAccountData={vaultAccountData}/>} />

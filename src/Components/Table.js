@@ -27,7 +27,7 @@ export function DiscrodFill({ value }) {
   );
 }
 
-export function EditFill({ value }) {
+export function DeleteFill({ value }) {
     return (
         <a><FaRegEdit /></a>
     );

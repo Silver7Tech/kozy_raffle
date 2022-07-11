@@ -4,7 +4,7 @@ import Win from '../assets/win.svg';
 import Timer from "./Timer";
 import { useNavigate } from 'react-router-dom';
 
-const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTime,walletAddress,activeTab}) => {
+const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTime,walletAddress,closeRaffle,activeTab}) => {
     const navigate = useNavigate()
     const nextPageHandler = () => {
         if(activeTab === "live") {
@@ -52,6 +52,33 @@ const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTi
             });
         }
     }
+    const closeAdmin = () => {
+        if(process.env.REACT_APP_ADMIN_WALLET === walletAddress) {
+            return (
+                <div className="flex flex-row items-center z-10">
+                    <img src={Win} alt="win" className="ml-0 sm:ml-6 w-12"/>
+                    <div className="flex flex-col items-center justify-center ml-3 sm:ml-3 z-10">
+                        <p className="text-black text-tiny sm:text-0sm ">WINNERS LIST</p>
+                        <button className="bg-green rounded-full px-8 py-1 text-white font-bold text-tiny sm:text-0sm hover:bg-transparent border-green hover:text-green border-4" onClick={nextPageHandler}>CLICK HERE</button>
+                    </div>
+                    <div className="flex flex-col items-center justify-center ml-3 sm:ml-3 z-10">
+                        <p className="text-black text-tiny sm:text-0sm ">DELETE RAFFLE</p>
+                        <button className="bg-green rounded-full px-8 py-1 text-white font-bold text-tiny sm:text-0sm hover:bg-transparent border-green hover:text-green border-4"  onClick={()=>closeRaffle(currentRaffleIndex)}>CLICK HERE</button>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className="flex flex-row items-center z-10">
+                    <img src={Win} alt="win" className="ml-0 sm:ml-6 w-12"/>
+                    <div className="flex flex-col items-center justify-center ml-3 sm:ml-3 z-10">
+                        <p className="text-black text-tiny sm:text-0sm ">WINNERS LIST</p>
+                        <button className="bg-green rounded-full px-8 py-1 text-white font-bold text-tiny sm:text-0sm hover:bg-transparent border-green hover:text-green border-4" onClick={nextPageHandler}>CLICK HERE</button>
+                    </div>
+                </div>
+            )
+        }
+    }
 
     return(
         <>
@@ -70,13 +97,7 @@ const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTi
             {
                 activeTab === "closed"
                 ?
-                <div className="flex flex-row items-center z-10">
-                    <img src={Win} alt="win" className="ml-0 sm:ml-6 w-12"/>
-                    <div className="flex flex-col items-center justify-center ml-3 sm:ml-3 z-10">
-                        <p className="text-black text-tiny sm:text-0sm ">WINNERS LIST</p>
-                        <button className="bg-green rounded-full px-8 py-1 text-white font-bold text-tiny sm:text-0sm hover:bg-transparent border-green hover:text-green border-4" onClick={nextPageHandler}>CLICK HERE</button>
-                    </div>
-                </div>
+                closeAdmin()
                 :
                 <div className="flex flex-col items-center justify-center ml-0 sm:ml-10 z-10">
                     <p className="text-black text-tiny sm:text-0sm ">ENTER RAFFLE</p>
