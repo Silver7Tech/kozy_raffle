@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTable,useSortBy } from 'react-table';
 import { SortDownIcon, SortUpIcon, SortIcon } from "./shared/Icon";
-import { FaDiscord,FaTwitter,FaRegEdit,FaEye } from "react-icons/fa"
+import { FaDiscord,FaTwitter,FaRegEdit,FaEye, FaTrashAlt } from "react-icons/fa"
 
 export function StatusPill({ value }) {
     return (
@@ -27,11 +27,11 @@ export function DiscrodFill({ value }) {
   );
 }
 
-export function DeleteFill({ value }) {
-    return (
-        <a><FaRegEdit /></a>
-    );
-}
+// export function DeleteFill({ value }) {
+//     return (
+//         <div className='cursor-pointer' onClick={value}><FaTrashAlt /></div>
+//     );
+// }
 
 export function ViewFill({ value }) {
     return (

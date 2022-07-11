@@ -401,7 +401,7 @@ function App() {
             <Route path="/closed" exact element={<Closed vaultAccountData={vaultAccountData} entrantAccountData={entrantAccountData} walletAddress={walletAddress} closeRaffle={closeRaffle}/>} />
             <Route path="/winners" exact element={<Winners revealWinner={revealWinner} />} />
             <Route path="/purchase" exact element={<Purchase buyTicket={buyTicket}/>} />
-            <Route path="/admin" exact element={<Admin vaultAccountData={vaultAccountData}/>} />
+            <Route path="/admin" exact element={<Admin vaultAccountData={vaultAccountData} closeRaffle={closeRaffle}/>} />
           </Routes>
           :
           <></>
