@@ -28,27 +28,31 @@ const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTi
             });
         }
         else if(activeTab === "closed") {
-            // console.log(vaultAccountData[currentRaffleIndex].winner);
-            // let winner_publicKey = vaultAccountData[currentRaffleIndex].winner.publicKey.toBase58();
-            // let entites = 0;
 
-            // entrantAccountData.entrants.map((item)=> {
-            //     if(item.publicKey.toBase58()===winner_publicKey && item.index === vaultAccountData[currentRaffleIndex].index){
-            //         console.log(item.publicKey.toBase58())
-            //         entites+=1;
-            //     }
-            // });
+            let winnersRaffle = vaultAccountData[currentRaffleIndex].winner;
+            let winnerInfo = [];
+            let count = winnersRaffle.length;
+            for(let i=0;i<count;i++) {
+                const winner_publicKey = winnersRaffle[i].publicKey.toBase58();
+                
+                let entites = 0;
+                entrantAccountData.entrants.map((item)=> {
+                    if(item.publicKey.toBase58()===winner_publicKey && item.index === vaultAccountData[currentRaffleIndex].index){
+                        entites+=1;
+                    }
+                });
+                winnerInfo.push({
+                    wallet_address: winner_publicKey,
+                    entries: entites,
+                })
+            }
+            console.log(winnerInfo)
 
-            // if(vaultAccountData[currentRaffleIndex].winner.ticket===0){
-            //     winner_publicKey = 'None';
-            //     entites = '';
-            // }
             navigate('/winners',{
                 state:{
                     vaultAccountData: vaultAccountData,
                     currentRaffleIndex: currentRaffleIndex,
-                    // winner_publicKey: winner_publicKey,
-                    // entites: entites,
+                    winnerInfo: winnerInfo,
                 }
             });
         }

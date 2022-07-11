@@ -191,6 +191,21 @@ function App() {
       console.log("error", error);
     }
   }
+
+  const getInfo = async() => {
+    try{
+      const provider = getProvider();
+      const program = new Program(idl, programID, provider);
+      const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
+      setVaultAccountData(vaultAccountDatas);
+      console.log(vaultAccountDatas)
+      const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
+      setEntrantAccountData(entrantAccountDatas);
+    } catch(error){
+      console.log(error)
+    }
+
+  }
   const createRaffle = async(name, image, discord, twitter, end_timestamp, ticket_price, winner, collection) => {
     try {
       const provider = getProvider();
@@ -212,11 +227,8 @@ function App() {
           },
         }
       )
-      const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
-      setVaultAccountData(vaultAccountDatas);
-      console.log(vaultAccountDatas)
-      const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
-      setEntrantAccountData(entrantAccountDatas);
+      getInfo()
+     
     } catch (error) {
       console.log(error)
     }
@@ -262,6 +274,7 @@ function App() {
         }
       )
       setAccountIsUpdating(true);
+      getInfo();
     } catch (error) {
       console.log(error)
     }
@@ -271,7 +284,6 @@ function App() {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
       if(vaultAccountData!==null && walletAddress===process.env.REACT_APP_ADMIN_WALLET){
-        console.log(vaultAccountData.raffles[raffleIndex].winner)
         if(vaultAccountData.raffles[raffleIndex].winner.length===0){
           await program.rpc.revealWinners(
             new BN(raffleIndex+1),
@@ -283,6 +295,7 @@ function App() {
               },
             }
           )
+          getInfo();
         }
       }
     } catch (error) {
@@ -294,16 +307,50 @@ function App() {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
-      await program.rpc.closeRaffle(
-        new BN(raffleIndex+1),
-        {
-          accounts: {
-            vaultAccount: vaultAccount,
-            entrantAccount: entrantAccount,
-            owner: provider.wallet.publicKey,
-          },
-        }
-      )
+
+      if (vaultAccount===null || entrantAccount===null){
+        const [_vaultAccount, _vaultBump] = 
+        await PublicKey.findProgramAddress(
+          [
+            Buffer.from("vaults"),
+            programID.toBuffer(),
+          ],
+          programID
+        );
+
+        const [_entrantAccount, _entrantBump] = 
+        await PublicKey.findProgramAddress(
+          [
+            Buffer.from("entrants"),
+            programID.toBuffer(),
+          ],
+          programID
+        );
+        await program.rpc.closeRaffle(
+          new BN(raffleIndex),
+          {
+            accounts: {
+              vaultAccount: _vaultAccount,
+              entrantAccount: _entrantAccount,
+              owner: provider.wallet.publicKey,
+            },
+          }
+        )
+      } else {
+        await program.rpc.closeRaffle(
+          new BN(raffleIndex),
+          {
+            accounts: {
+              vaultAccount: vaultAccount,
+              entrantAccount: entrantAccount,
+              owner: provider.wallet.publicKey,
+            },
+          }
+        )
+      }
+
+
+      getInfo();
     } catch (error) {
       console.log(error);
     }
@@ -332,8 +379,6 @@ function App() {
         const program = new Program(idl, programID, provider);
         const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
         const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
-        console.log(vaultAccountDatas)
-        console.log(entrantAccountDatas)
         setVaultAccountData(vaultAccountDatas);
         setEntrantAccountData(entrantAccountDatas);
       } catch (error) {

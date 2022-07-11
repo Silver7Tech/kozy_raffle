@@ -18,18 +18,20 @@ const Winners = ({revealWinner}) => {
       if(location.state.vaultAccountData!==null){
         setCurrentRaffle(location.state.vaultAccountData[location.state.currentRaffleIndex]);
         revealWinner(location.state.vaultAccountData[location.state.currentRaffleIndex].index-1);
+ 
+
       }
   },[location.state.vaultAccountData])
 
   const data = React.useMemo(
-      () => [
-        {
-          wallet_address: "",
-          entries: "",
-        },
-      ],
-      []
+    () => {
+      if(location.state.winnerInfo!=null){
+        return location.state.winnerInfo
+      }
+    },
+    [location.state.winnerInfo]
   )
+
   
   const columns = React.useMemo(
       () => [
