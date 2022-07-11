@@ -9,7 +9,8 @@ import { useLocation } from "react-router-dom";
 // SystemProgram is a reference to the Solana runtime!
 
 const Winners = ({revealWinner}) => {
-  const [curretRaffle, setCurrentRaffle] = useState(null)
+  const [curretRaffle, setCurrentRaffle] = useState(null);
+  const [winners, setWinners] = useState(null);
 
   const location = useLocation();
 
@@ -23,8 +24,8 @@ const Winners = ({revealWinner}) => {
   const data = React.useMemo(
       () => [
         {
-          wallet_address: location.state.winner_publicKey,
-          entries: location.state.entites,
+          wallet_address: "",
+          entries: "",
         },
       ],
       []

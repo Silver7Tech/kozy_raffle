@@ -30,7 +30,7 @@ const Admin = ({vaultAccountData,closeRaffle}) => {
             discord: item.discord,
             price_per_ticket: String(Number(item.ticketPrice)/100)+"$KOZY",
             collection_size: Number(item.collection),
-            winners: 0,
+            winners: Number(item.winnerNumber),
             time: timeString
           }
           temp_live_data.push(single_raffle)
@@ -42,7 +42,7 @@ const Admin = ({vaultAccountData,closeRaffle}) => {
             discord: item.discord,
             price_per_ticket: String(Number(item.ticketPrice)/100)+"$KOZY",
             collection_size: Number(item.collection),
-            winners: 1,
+            winners: Number(item.winnerNumber),
             option: item.index,
           }
           temp_closed_data.push(single_raffle)

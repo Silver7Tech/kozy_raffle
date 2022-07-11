@@ -99,6 +99,10 @@
           "type": "string"
         },
         {
+          "name": "winnerNumber",
+          "type": "u32"
+        },
+        {
           "name": "collection",
           "type": "u32"
         }
@@ -330,9 +334,15 @@
             "type": "u32"
           },
           {
+            "name": "winnerNumber",
+            "type": "u32"
+          },
+          {
             "name": "winner",
             "type": {
-              "defined": "Ticket"
+              "vec": {
+                "defined": "Ticket"
+              }
             }
           }
         ]
@@ -397,6 +407,6 @@
     }
   ],
   "metadata": {
-    "address": "ATaoaEwWS6EcksC1TCU7H3MqCCvtWPkDSFvQYWw7LYhD"
+    "address": "9WxQgY1GoAHH2xLG6szh5KDEj9AwCAXymg7XvSVBVeD5"
   }
 }

@@ -191,7 +191,7 @@ function App() {
       console.log("error", error);
     }
   }
-  const createRaffle = async(name, image, discord, twitter, end_timestamp, ticket_price, collection) => {
+  const createRaffle = async(name, image, discord, twitter, end_timestamp, ticket_price, winner, collection) => {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
@@ -202,6 +202,7 @@ function App() {
         twitter,
         new BN(end_timestamp),
         ticket_price.toString(),
+        new BN(winner),
         new BN(collection),
         {
           accounts: {
@@ -270,7 +271,8 @@ function App() {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
       if(vaultAccountData!==null && walletAddress===process.env.REACT_APP_ADMIN_WALLET){
-        if(vaultAccountData.raffles[raffleIndex].winner.ticket===0){
+        console.log(vaultAccountData.raffles[raffleIndex].winner)
+        if(vaultAccountData.raffles[raffleIndex].winner.length===0){
           await program.rpc.revealWinners(
             new BN(raffleIndex+1),
             {
@@ -362,6 +364,7 @@ function App() {
             twitterLink,
             end_timestamp,
             price,
+            winners,
             collectionSize
         )
         setName('');

@@ -44,7 +44,7 @@ const Live = ({vaultAccountData,entrantAccountData,walletAddress}) => {
                         </div>
                         <div className="flex flex-col sm:flex-row text-white font-bold text-1sm mt-5">
                             <div className="text-center">NO. OF TICKETS SOLD :&nbsp; <span className="text-green">{liveRaffles[currentRaffleIndex].ticketIndex}/{liveRaffles[currentRaffleIndex].collection}</span></div>
-                            <div className="text-center"><span className="hidden sm:inline">&nbsp;|</span> NO. OF WINNERS :&nbsp; <span className="text-bitblue">1</span></div>
+                            <div className="text-center"><span className="hidden sm:inline">&nbsp;|</span> NO. OF WINNERS :&nbsp; <span className="text-bitblue">{Number(liveRaffles[currentRaffleIndex].winnerNumber)}</span></div>
                         </div>
                         {countTime>0?
                             <Footer  vaultAccountData={liveRaffles} entrantAccountData={entrantAccountData} currentRaffleIndex={currentRaffleIndex} countTime={countTime} walletAddress={walletAddress} activeTab={"live"}/>
