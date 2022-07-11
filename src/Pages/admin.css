@@ -6,11 +6,11 @@
     border-bottom: 1px solid #fff;
 } 
 .admin thead tr th {
-    min-width: 150px;
+    min-width: 185px;
     padding-right: 0;
 }
 .admin tbody tr td {
-    min-width: 150px;
+    min-width: 185px;
     padding-right: 0;
 }
 @media (max-width:750px) {
