@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SwiperComponent from "../Components/Swiper/SwiperComponent";
 import { FaDiscord,FaTwitter } from "react-icons/fa"
 import Footer from "../Components/Footer";
-const Closed = ({vaultAccountData,entrantAccountData,walletAddress,closeRaffle}) => {
+const Closed = ({vaultAccountData,entrantAccountData,walletAddress}) => {
     const [currentRaffleIndex, setCurrentRaffleIndex] = useState(0);
     const [closedRaffles, setClosedRaffles] = useState(null);
 
@@ -37,7 +37,7 @@ const Closed = ({vaultAccountData,entrantAccountData,walletAddress,closeRaffle})
                             <div className="text-center">NO. OF TICKETS SOLD :&nbsp; <span className="text-green">{closedRaffles[currentRaffleIndex].ticketIndex}/{closedRaffles[currentRaffleIndex].collection}</span></div>
                             <div className="text-center"><span className="hidden sm:inline">&nbsp;|</span> NO. OF WINNERS :&nbsp; <span className="text-bitblue">1</span></div>
                         </div> 
-                        <Footer vaultAccountData={closedRaffles} entrantAccountData={entrantAccountData} currentRaffleIndex={currentRaffleIndex} countTime={0}walletAddress={walletAddress} closeRaffle={closeRaffle} activeTab={"closed"}/>
+                        <Footer vaultAccountData={closedRaffles} entrantAccountData={entrantAccountData} currentRaffleIndex={currentRaffleIndex} countTime={0}walletAddress={walletAddress} activeTab={"closed"}/>
                     </div>
                 </>
             )

@@ -4,7 +4,7 @@ import Win from '../assets/win.svg';
 import Timer from "./Timer";
 import { useNavigate } from 'react-router-dom';
 
-const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTime,walletAddress,closeRaffle,activeTab}) => {
+const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTime,walletAddress,activeTab}) => {
     const navigate = useNavigate()
     const nextPageHandler = () => {
         if(activeTab === "live") {
@@ -60,10 +60,6 @@ const Footer = ({ vaultAccountData,entrantAccountData,currentRaffleIndex,countTi
                     <div className="flex flex-col items-center justify-center ml-3 sm:ml-3 z-10">
                         <p className="text-black text-tiny sm:text-0sm ">WINNERS LIST</p>
                         <button className="bg-green rounded-full px-8 py-1 text-white font-bold text-tiny sm:text-0sm hover:bg-transparent border-green hover:text-green border-4" onClick={nextPageHandler}>CLICK HERE</button>
-                    </div>
-                    <div className="flex flex-col items-center justify-center ml-3 sm:ml-3 z-10">
-                        <p className="text-black text-tiny sm:text-0sm ">DELETE RAFFLE</p>
-                        <button className="bg-green rounded-full px-8 py-1 text-white font-bold text-tiny sm:text-0sm hover:bg-transparent border-green hover:text-green border-4"  onClick={()=>closeRaffle(currentRaffleIndex)}>CLICK HERE</button>
                     </div>
                 </div>
             )
