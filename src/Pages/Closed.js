@@ -17,14 +17,14 @@ const Closed = ({vaultAccountData,entrantAccountData,walletAddress}) => {
             })
         }
     },[vaultAccountData]);
-    
 
-    if(closedRaffles!==null && currentRaffleIndex!==null){
-        if(closedRaffles.length!==0) {
-            return(
-                <>
-                    <div className="flex flex-col items-center w-full">
-                        <p className="flex flex-col sm:flex-row justify-center items-center text-white font-bold text-2sm sm:text-3sm">KOZY KLUB<span className="hidden sm:flex">&nbsp;</span><span className="text-red">CLOSED</span></p>
+    return(
+        <div className="flex flex-col items-center w-full">
+            <p className="flex flex-col sm:flex-row justify-center items-center text-white font-bold text-2sm sm:text-3sm">KOZY KLUB<span className="hidden sm:flex">&nbsp;</span><span className="text-red">CLOSED</span></p>
+            {
+                closedRaffles!==null && currentRaffleIndex!==null && closedRaffles.length !== 0
+                ?
+                    <>
                         <SwiperComponent vaultAccountData={closedRaffles} currentRaffleIndex={currentRaffleIndex} setCurrentRaffleIndex={setCurrentRaffleIndex} activeTab={"closed"}/>
                         <div className="flex flex-col sm:flex-row items-center text-white font-bold text-1sm sm:text-2sm mt-5">
                             {closedRaffles[currentRaffleIndex].name}
@@ -38,12 +38,14 @@ const Closed = ({vaultAccountData,entrantAccountData,walletAddress}) => {
                             <div className="text-center"><span className="hidden sm:inline">&nbsp;|</span> NO. OF WINNERS :&nbsp; <span className="text-bitblue">{Number(closedRaffles[currentRaffleIndex].winnerNumber)}</span></div>
                         </div> 
                         <Footer vaultAccountData={closedRaffles} entrantAccountData={entrantAccountData} currentRaffleIndex={currentRaffleIndex} countTime={0}walletAddress={walletAddress} activeTab={"closed"}/>
-                    </div>
-                </>
-            )
-        }
-       
-    } 
+                    </>
+                :
+                <div className="text-white flex items-center justify-center text-1sm">No Closed Raffles</div>
+            }
+            
+        </div>
+    )
+   
 
 }
 

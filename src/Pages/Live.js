@@ -28,11 +28,12 @@ const Live = ({vaultAccountData,entrantAccountData,walletAddress}) => {
 
    
     return(
-        <>
-            {
-                liveRaffles.length!==0?
-                    <div className="flex flex-col items-center w-full">
-                        <p className="text-white font-bold text-2sm sm:text-3sm">KOZY KLUB <span className="text-green">LIVE</span></p>
+        <div className="flex flex-col items-center w-full">
+            <p className="text-white font-bold text-2sm sm:text-3sm">KOZY KLUB <span className="text-green">LIVE</span></p>
+                {
+                    liveRaffles.length!==0
+                    ?
+                    <>
                         <SwiperComponent vaultAccountData={liveRaffles} currentRaffleIndex={currentRaffleIndex} setCurrentRaffleIndex={setCurrentRaffleIndex} activeTab={"live"}/>
 
                         <div className="flex flex-col sm:flex-row text-white items-center font-bold text-1sm sm:text-2sm mt-5">
@@ -46,16 +47,19 @@ const Live = ({vaultAccountData,entrantAccountData,walletAddress}) => {
                             <div className="text-center">NO. OF TICKETS SOLD :&nbsp; <span className="text-green">{liveRaffles[currentRaffleIndex].ticketIndex}/{liveRaffles[currentRaffleIndex].collection}</span></div>
                             <div className="text-center"><span className="hidden sm:inline">&nbsp;|</span> NO. OF WINNERS :&nbsp; <span className="text-bitblue">{Number(liveRaffles[currentRaffleIndex].winnerNumber)}</span></div>
                         </div>
-                        {countTime>0?
-                            <Footer  vaultAccountData={liveRaffles} entrantAccountData={entrantAccountData} currentRaffleIndex={currentRaffleIndex} countTime={countTime} walletAddress={walletAddress} activeTab={"live"}/>
-                            :
-                            <></>
-                        }
-                    </div>
+                            {
+                                countTime > 0
+                                ?
+                                <Footer  vaultAccountData={liveRaffles} entrantAccountData={entrantAccountData} currentRaffleIndex={currentRaffleIndex} countTime={countTime} walletAddress={walletAddress} activeTab={"live"}/>
+                                :
+                                <></>
+                            }
+                    </>
                 :
-                    <></>
+                <div className="text-white flex items-center justify-center text-1sm">No Live Raffles</div>
             }
-        </>
+            </div>
+                
     )
     
 }
