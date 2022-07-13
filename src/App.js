@@ -26,7 +26,7 @@ const { SystemProgram } = web3;
 const programID = new PublicKey(idl.metadata.address);
 
 // Set our network to devnet.
-const network = clusterApiUrl('devnet');
+const network = clusterApiUrl('mainnet-beta');
 
 // Controls how we want to acknowledge when a transaction is "done".
 const opts = {
@@ -374,21 +374,28 @@ function App() {
 
   useEffect(()=> {
     const setAccountDataFromProgram = async() => {
-      try {
-        const provider = getProvider();
-        const program = new Program(idl, programID, provider);
-        const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
-        const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
-        setVaultAccountData(vaultAccountDatas);
-        setEntrantAccountData(entrantAccountDatas);
-      } catch (error) {
-        if(walletAddress === process.env.REACT_APP_ADMIN_WALLET) {
-          initializeVault();
-          initializeEntrant();
+      if(vaultAccount!==null & entrantAccount!==null) {
+        try {
+          const provider = getProvider();
+          const program = new Program(idl, programID, provider);
+          const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
+          console.log(vaultAccountDatas)
+
+          const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
+          console.log(entrantAccountDatas)
+          setVaultAccountData(vaultAccountDatas);
+          setEntrantAccountData(entrantAccountDatas);
+        } catch (error) {
+          console.log(error)
+          if(walletAddress === process.env.REACT_APP_ADMIN_WALLET) {
+            initializeVault();
+            initializeEntrant();
+          }
         }
       }
+
     }
-    if(vaultAccount!==null && vaultBump!==null&&entrantAccount!==null && entrantBump!==null) {
+    if(vaultAccount!==null && vaultBump!==null&& entrantAccount!==null && entrantBump!==null) {
       setAccountDataFromProgram();
     }
     if(AccountIsUpdating===true){

@@ -55,6 +55,32 @@
       ]
     },
     {
+      "name": "updateEntrant",
+      "accounts": [
+        {
+          "name": "vaultAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "entrantAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "bump",
+          "type": "u8"
+        }
+      ]
+    },
+    {
       "name": "createRaffle",
       "accounts": [
         {
@@ -407,6 +433,6 @@
     }
   ],
   "metadata": {
-    "address": "9WxQgY1GoAHH2xLG6szh5KDEj9AwCAXymg7XvSVBVeD5"
+    "address": "Bu1HKmjzKmnWLNYQKtLSrk462ijZaRAc9tnPY7prdz8g"
   }
 }
