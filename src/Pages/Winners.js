@@ -17,9 +17,7 @@ const Winners = ({revealWinner}) => {
   useEffect(()=> {
       if(location.state.vaultAccountData!==null){
         setCurrentRaffle(location.state.vaultAccountData[location.state.currentRaffleIndex]);
-        revealWinner(location.state.vaultAccountData[location.state.currentRaffleIndex].index-1);
- 
-
+        revealWinner(location.state.currentRaffleIndex);
       }
   },[location.state.vaultAccountData])
 

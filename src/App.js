@@ -201,6 +201,7 @@ function App() {
       console.log(vaultAccountDatas)
       const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
       setEntrantAccountData(entrantAccountDatas);
+      console.log(entrantAccountDatas)
     } catch(error){
       console.log(error)
     }
@@ -285,8 +286,9 @@ function App() {
       const program = new Program(idl, programID, provider);
       if(vaultAccountData!==null && walletAddress===process.env.REACT_APP_ADMIN_WALLET){
         if(vaultAccountData.raffles[raffleIndex].winner.length===0){
+          let index = vaultAccountData.raffles[raffleIndex].index;
           await program.rpc.revealWinners(
-            new BN(raffleIndex+1),
+            new BN(index),
             {
               accounts: {
                 vaultAccount: vaultAccount,
