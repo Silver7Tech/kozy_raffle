@@ -26,7 +26,7 @@ const { SystemProgram } = web3;
 const programID = new PublicKey(idl.metadata.address);
 
 // Set our network to devnet.
-const network = clusterApiUrl('mainnet-beta');
+const network = "https://solana-api.projectserum.com/"//clusterApiUrl('mainnet-beta');
 
 // Controls how we want to acknowledge when a transaction is "done".
 const opts = {
