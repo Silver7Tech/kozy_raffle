@@ -12,26 +12,14 @@ export function StatusPill({ value }) {
       </span>
     );
   }
-export function TwitterFill({ value }) {
+export function LinksFill({ value }) {
     return (
     <div className="flex flex-row">
-        <a className="text-black text-0sm rounded-full bg-white p-3" href={value} target="_blank" rel="noreferrer"><FaTwitter/></a>
+        <a className="text-black text-0sm rounded-full bg-white p-3" href={value.twitter} target="_blank" rel="noreferrer"><FaTwitter/></a>
+        <a className="text-black text-0sm rounded-full bg-white p-3 ml-2" href={value.discord} target="_blank" rel="noreferrer"><FaDiscord/></a>
     </div>
     );
 }
-export function DiscrodFill({ value }) {
-  return (
-  <div className="flex flex-row">
-      <a className="text-black text-0sm rounded-full bg-white p-3 ml-2" href={value} target="_blank" rel="noreferrer"><FaDiscord/></a>
-  </div>
-  );
-}
-
-// export function DeleteFill({ value }) {
-//     return (
-//         <div className='cursor-pointer' onClick={value}><FaTrashAlt /></div>
-//     );
-// }
 
 export function ViewFill({ value }) {
     return (

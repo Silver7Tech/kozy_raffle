@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from "react";
 import { FaTrashAlt } from "react-icons/fa"
-import TableComponent, { TwitterFill,DiscrodFill, ImgFill } from "../Components/Table";
+import TableComponent, { LinksFill, ImgFill } from "../Components/Table";
 import './admin.css'
 const Admin = ({vaultAccountData,closeRaffle}) => {
   const [liveRaffleData, setCurrentRaffles] = useState(null);
@@ -21,13 +21,12 @@ const Admin = ({vaultAccountData,closeRaffle}) => {
           const hour = (time -time%3600)/3600;
           time = time - hour * 3600;
           const minute = (time -time%60)/60;
-          const timeString = day.toString() + "D: " + hour.toString() + "H: " + minute.toString() + "M";
+          const timeString = day.toString() + " D: " + hour.toString() + " H: " + minute.toString() + " M";
 
           let single_raffle = {
             image: item.image,
             name: item.name,
-            twitter: item.twitter,
-            discord: item.discord,
+            links: {"twitter": item.twitter, "discord":item.discord},
             price_per_ticket: String(Number(item.ticketPrice)/100)+"$KOZY",
             collection_size: Number(item.collection),
             winners: Number(item.winnerNumber),
@@ -38,8 +37,7 @@ const Admin = ({vaultAccountData,closeRaffle}) => {
           let single_raffle = {
             image: item.image,
             name: item.name,
-            twitter: item.twitter,
-            discord: item.discord,
+            links: {"twitter": item.twitter, "discord":item.discord},
             price_per_ticket: String(Number(item.ticketPrice)/100)+"$KOZY",
             collection_size: Number(item.collection),
             winners: Number(item.winnerNumber),
@@ -88,14 +86,9 @@ const DeleteFill = ({ value }) => {
         accessor: 'name',
       },
       {
-        Header: 'TWITTER',
-        accessor: 'twitter',
-        Cell: TwitterFill,
-      },
-      {
-        Header: 'DISCORD',
-        accessor: 'discord',
-        Cell: DiscrodFill,
+        Header: 'Links',
+        accessor: 'links',
+        Cell: LinksFill,
       },
       {
         Header: 'PRICE PER TICKET',
@@ -129,14 +122,9 @@ const DeleteFill = ({ value }) => {
         accessor: 'name',
       },
       {
-        Header: 'TWITTER',
-        accessor: 'twitter',
-        Cell: TwitterFill,
-      },
-      {
-        Header: 'DISCORD',
-        accessor: 'discord',
-        Cell: DiscrodFill,
+        Header: 'Links',
+        accessor: 'links',
+        Cell: LinksFill,
       },
       {
         Header: 'PRICE PER TICKET',
@@ -174,13 +162,13 @@ const DeleteFill = ({ value }) => {
       {
         liveRaffleData!=null && option == 1
         ?
-        <div className="admin w-11/12 mx-auto p-5 border-2 border-white rounded-3xl">
+        <div className="admin w-11/12 mx-auto py-5 px-10 border-2 border-white rounded-3xl">
           <TableComponent columns={livecolumns} data={livedata}/>
         </div>
         :
         closedRaffleData!=null && option == 0
         ?
-        <div className="admin w-11/12 mx-auto p-5 border-2 border-white rounded-3xl">
+        <div className="admin w-11/12 mx-auto py-5 px-10 border-2 border-white rounded-3xl">
           <TableComponent columns={closedcolumns} data={closeddata}/>
         </div>         
         :

@@ -6,11 +6,11 @@
     border-bottom: 1px solid #fff;
 } 
 .admin thead tr th {
-    min-width: 185px;
+    width: 14.3%;
     padding-right: 0;
 }
 .admin tbody tr td {
-    min-width: 185px;
+    width: 14.3%;
     padding-right: 0;
 }
 @media (max-width:750px) {
@@ -22,9 +22,9 @@
         overflow-x: auto;
     }
     .admin thead tr th {
-        min-width: 100px;
+        min-width: 150px;
     }
     .admin tbody tr td {
-        min-width: 100px;
+        min-width: 150px;
     }
 }
