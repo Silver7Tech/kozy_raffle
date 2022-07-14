@@ -198,10 +198,8 @@ function App() {
       const program = new Program(idl, programID, provider);
       const vaultAccountDatas = await program.account.vaultAccount.fetch(vaultAccount);
       setVaultAccountData(vaultAccountDatas);
-      console.log(vaultAccountDatas)
       const entrantAccountDatas = await program.account.entrants.fetch(entrantAccount);
       setEntrantAccountData(entrantAccountDatas);
-      console.log(entrantAccountDatas)
     } catch(error){
       console.log(error)
     }
@@ -211,23 +209,62 @@ function App() {
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
-      await program.rpc.createRaffle(
-        name,
-        image,
-        discord,
-        twitter,
-        new BN(end_timestamp),
-        ticket_price.toString(),
-        new BN(winner),
-        new BN(collection),
-        {
-          accounts: {
-            vaultAccount: vaultAccount,
-            entrantAccount: entrantAccount,
-            owner: provider.wallet.publicKey,
-          },
-        }
-      )
+      
+      if (vaultAccount===null || entrantAccount===null){
+        const [_vaultAccount, _vaultBump] = 
+        await PublicKey.findProgramAddress(
+          [
+            Buffer.from("vaults"),
+            programID.toBuffer(),
+          ],
+          programID
+        );
+
+        const [_entrantAccount, _entrantBump] = 
+        await PublicKey.findProgramAddress(
+          [
+            Buffer.from("entrants"),
+            programID.toBuffer(),
+          ],
+          programID
+        );
+        await program.rpc.createRaffle(
+          name,
+          image,
+          discord,
+          twitter,
+          new BN(end_timestamp),
+          ticket_price.toString(),
+          new BN(winner),
+          new BN(collection),
+          {
+            accounts: {
+              vaultAccount: _vaultAccount,
+              entrantAccount: _entrantAccount,
+              owner: provider.wallet.publicKey,
+            },
+          }
+        )
+      } else {
+        await program.rpc.createRaffle(
+          name,
+          image,
+          discord,
+          twitter,
+          new BN(end_timestamp),
+          ticket_price.toString(),
+          new BN(winner),
+          new BN(collection),
+          {
+            accounts: {
+              vaultAccount: vaultAccount,
+              entrantAccount: entrantAccount,
+              owner: provider.wallet.publicKey,
+            },
+          }
+        )
+      }
+
       getInfo()
      
     } catch (error) {
@@ -260,20 +297,56 @@ function App() {
         SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
       ))[0]
 
-      await program.rpc.buyTickets(
-        new BN(index),
-        new BN(amount),
-        {
-          accounts: {
-            vaultAccount: vaultAccount,
-            entrantAccount: entrantAccount,
-            proceeds:toTokenAccount,
-            buyerTokenAccount:fromTokenAccount,
-            buyerTransferAuthority:provider.wallet.publicKey,
-            tokenProgram: TOKEN_PROGRAM_ID,
-          },
-        }
-      )
+      if (vaultAccount===null || entrantAccount===null){
+        const [_vaultAccount, _vaultBump] = 
+        await PublicKey.findProgramAddress(
+          [
+            Buffer.from("vaults"),
+            programID.toBuffer(),
+          ],
+          programID
+        );
+
+        const [_entrantAccount, _entrantBump] = 
+        await PublicKey.findProgramAddress(
+          [
+            Buffer.from("entrants"),
+            programID.toBuffer(),
+          ],
+          programID
+        );
+        await program.rpc.buyTickets(
+          new BN(index),
+          new BN(amount),
+          {
+            accounts: {
+              vaultAccount: _vaultAccount,
+              entrantAccount: _entrantAccount,
+              proceeds:toTokenAccount,
+              buyerTokenAccount:fromTokenAccount,
+              buyerTransferAuthority:provider.wallet.publicKey,
+              tokenProgram: TOKEN_PROGRAM_ID,
+            },
+          }
+        )
+      } else {
+        await program.rpc.buyTickets(
+          new BN(index),
+          new BN(amount),
+          {
+            accounts: {
+              vaultAccount: vaultAccount,
+              entrantAccount: entrantAccount,
+              proceeds:toTokenAccount,
+              buyerTokenAccount:fromTokenAccount,
+              buyerTransferAuthority:provider.wallet.publicKey,
+              tokenProgram: TOKEN_PROGRAM_ID,
+            },
+          }
+        )
+      }
+
+
       setAccountIsUpdating(true);
       getInfo();
     } catch (error) {
@@ -287,16 +360,47 @@ function App() {
       if(vaultAccountData!==null && walletAddress===process.env.REACT_APP_ADMIN_WALLET){
         if(vaultAccountData.raffles[raffleIndex].winner.length===0){
           let index = vaultAccountData.raffles[raffleIndex].index;
-          await program.rpc.revealWinners(
-            new BN(index),
-            {
-              accounts: {
-                vaultAccount: vaultAccount,
-                entrantAccount: entrantAccount,
-                recentBlockhashes: SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
-              },
-            }
-          )
+          if (vaultAccount===null || entrantAccount===null){
+            const [_vaultAccount, _vaultBump] = 
+            await PublicKey.findProgramAddress(
+              [
+                Buffer.from("vaults"),
+                programID.toBuffer(),
+              ],
+              programID
+            );
+    
+            const [_entrantAccount, _entrantBump] = 
+            await PublicKey.findProgramAddress(
+              [
+                Buffer.from("entrants"),
+                programID.toBuffer(),
+              ],
+              programID
+            );
+            await program.rpc.revealWinners(
+              new BN(index),
+              {
+                accounts: {
+                  vaultAccount: _vaultAccount,
+                  entrantAccount: _entrantAccount,
+                  recentBlockhashes: SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
+                },
+              }
+            )
+          } else {
+            await program.rpc.revealWinners(
+              new BN(index),
+              {
+                accounts: {
+                  vaultAccount: vaultAccount,
+                  entrantAccount: entrantAccount,
+                  recentBlockhashes: SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
+                },
+              }
+            )
+          }
+
           getInfo();
         }
       }
