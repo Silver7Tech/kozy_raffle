@@ -68,8 +68,8 @@ const Purchase = ({buyTicket}) => {
                     <div className="flex flex-col p-5 border-2 border-white rounded-3xl mt-5 sm:mt-0">
                         <div className="flex flex-row justify-center items-center text-1sm sm:text-5sm font-bold text-white">
                             {curretRaffle.name}
-                            <a className="text-black my-auto rounded-full bg-white text-0sm sm:text-1sm p-2 ml-4" href={curretRaffle.twitter}><FaTwitter/></a>
-                            <a className="text-black my-auto rounded-full bg-white text-0sm sm:text-1sm p-2 ml-4" href={curretRaffle.discord}><FaDiscord/></a>
+                            <a className="text-black my-auto rounded-full bg-white text-0sm sm:text-1sm p-2 ml-4" href={curretRaffle.twitter} target="_blank" rel="noreferrer"><FaTwitter/></a>
+                            <a className="text-black my-auto rounded-full bg-white text-0sm sm:text-1sm p-2 ml-4" href={curretRaffle.discord} target="_blank" rel="noreferrer"><FaDiscord/></a>
                         </div>
                         <hr className="mt-2"/>
                         <div className="text-white font-bold text-1sm mt-5">NO. OF TICKETS SOLD :&nbsp; <span className="text-green">{location.state.ticketIndex}/{curretRaffle.collection}</span></div>

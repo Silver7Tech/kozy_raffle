@@ -39,8 +39,8 @@ const Live = ({vaultAccountData,entrantAccountData,walletAddress}) => {
                         <div className="flex flex-col sm:flex-row text-white items-center font-bold text-1sm sm:text-2sm mt-5">
                             {liveRaffles[currentRaffleIndex].name}
                             <div className="flex flex-row justify-center mt-2 sm:mt-0">
-                                <a className="text-black text-1sm my-auto rounded-full bg-white p-2 ml-0 sm:ml-5" href={liveRaffles[currentRaffleIndex].twitter}><FaTwitter/></a>
-                                <a className="text-black text-1sm my-auto rounded-full bg-white p-2 ml-5" href={liveRaffles[currentRaffleIndex].discord}><FaDiscord/></a>
+                                <a className="text-black text-1sm my-auto rounded-full bg-white p-2 ml-0 sm:ml-5" href={liveRaffles[currentRaffleIndex].twitter} target="_blank" rel="noreferrer"><FaTwitter/></a>
+                                <a className="text-black text-1sm my-auto rounded-full bg-white p-2 ml-5" href={liveRaffles[currentRaffleIndex].discord} target="_blank" rel="noreferrer"><FaDiscord/></a>
                             </div>
                         </div>
                         <div className="flex flex-col sm:flex-row text-white font-bold text-1sm mt-5">

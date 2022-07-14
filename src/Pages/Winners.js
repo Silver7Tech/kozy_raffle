@@ -49,7 +49,7 @@ const Winners = ({revealWinner}) => {
       <>
         <p className="flex flex-col sm:flex-row justify-center items-center text-white font-bold text-2sm sm:text-3sm">
               <img src={Win} alt="win" className="hidden sm:inline"/>
-              <span className="hidden sm:inline">&nbsp;</span>{curretRaffle.name}
+              <span className="hidden sm:inline">&nbsp;</span>KOZY KLUBS
               <div className="flex flex-row justify-center items-center">
                   <img src={Win} alt="win" className="inline sm:hidden"/>
                   <span className="text-white">&nbsp;WINNERS&nbsp;</span>
@@ -59,10 +59,10 @@ const Winners = ({revealWinner}) => {
         <div className="flex flex-col md:flex-row items-center justify-evenly sm:mt-10">
           <div className="flex flex-col items-center justify-center">
               <img src={curretRaffle.image} alt="NFT1" className="rounded-full w-NFTW" />
-              <p className="text-white font-bold text-5sm sm:text-2sm mt-3 sm:mt-0">{curretRaffle.name}</p>
+              <p className="text-white font-bold text-1sm sm:text-2sm mt-3 sm:mt-0">{curretRaffle.name}</p>
               <div className="flex flex-row justify-center mt-2 sm:mt-0">
-                  <a className="text-black text-5sm sm:text-2sm my-auto rounded-full bg-white p-3" href={curretRaffle.twitter}><FaTwitter/></a>
-                  <a className="text-black text-5sm sm:text-2sm my-auto rounded-full bg-white p-3 ml-5" href={curretRaffle.discord}><FaDiscord/></a>
+                  <a className="text-black text-5sm sm:text-2sm my-auto rounded-full bg-white p-3" href={curretRaffle.twitter} target="_blank" rel="noreferrer"><FaTwitter/></a>
+                  <a className="text-black text-5sm sm:text-2sm my-auto rounded-full bg-white p-3 ml-5" href={curretRaffle.discord} target="_blank" rel="noreferrer"><FaDiscord/></a>
               </div>
           </div>
           <div className="winner_list p-5 border-2 border-white rounded-3xl">

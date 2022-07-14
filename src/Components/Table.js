@@ -15,14 +15,14 @@ export function StatusPill({ value }) {
 export function TwitterFill({ value }) {
     return (
     <div className="flex flex-row">
-        <a className="text-black text-0sm rounded-full bg-white p-3" href={value}><FaTwitter/></a>
+        <a className="text-black text-0sm rounded-full bg-white p-3" href={value} target="_blank" rel="noreferrer"><FaTwitter/></a>
     </div>
     );
 }
 export function DiscrodFill({ value }) {
   return (
   <div className="flex flex-row">
-      <a className="text-black text-0sm rounded-full bg-white p-3 ml-2" href={value}><FaDiscord/></a>
+      <a className="text-black text-0sm rounded-full bg-white p-3 ml-2" href={value} target="_blank" rel="noreferrer"><FaDiscord/></a>
   </div>
   );
 }
@@ -93,7 +93,7 @@ const TableComponent = ({columns, data}) => {
                    return (
                        <td
                            {...cell.getCellProps()}
-                            className="text-white pr-12 py-4 text-1sm whitespace-nowrap"
+                            className="text-white pr-12 py-4 text-1sm"
                        >
                          {cell.render('Cell')}
                        </td>
